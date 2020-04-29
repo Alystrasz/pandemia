@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pandemia/data/database/database.dart';
 import 'package:pandemia/data/database/models/Favorite.dart';
-import 'package:pandemia/data/state/AppModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
 import 'package:pandemia/utils/charts/barChart.dart';
 import 'package:pandemia/views/favorites/view.dart';
@@ -19,7 +18,6 @@ class FavoritesState extends State<FavoritesView> {
     await Future.delayed(Duration(milliseconds: 2000));
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
-    _showKey();
   }
 
   void _onLoading() async{
@@ -58,18 +56,6 @@ class FavoritesState extends State<FavoritesView> {
         f.isExpanded = false;
     });
 
-  }
-
-  void _showKey() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: new Text("Key display"),
-          content: new Text(AppModel.apiKey),
-        );
-      },
-    );
   }
 
   void _showDialog(Favorite item) {
