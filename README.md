@@ -7,7 +7,7 @@ Pandemia proposes to assist citizens in their daily movements by monitoring the 
 
 Pandemia is actively developed by members of the [Spirals research group](https://team.inria.fr/spirals/), but external contributions are welcomed.
 
-## Source code 
+## Source code
 
 All this project's Dart code is located in the `lib` folder.
 
