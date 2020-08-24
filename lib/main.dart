@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:pandemia/navigator.dart';
+import 'package:pandemia/views/VirusAnalyzeView.dart';
 import 'package:provider/provider.dart';
 import 'data/state/AppModel.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
           )
         )
       ],
+      routes: <String, WidgetBuilder> {
+        '/virus-analyze': (BuildContext context) => VirusAnalyzeView()
+      },
     );
   }
 }

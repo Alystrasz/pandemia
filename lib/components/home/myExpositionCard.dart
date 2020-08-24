@@ -22,7 +22,6 @@ class MyExpositionCard extends StatelessWidget {
           children: <Widget>[
             Container(
               color: CustomPalette.background[600],
-
               child: Stack (
                 children: <Widget>[
                   buildGraph(),
@@ -50,9 +49,18 @@ class MyExpositionCard extends StatelessWidget {
                       ),
                       padding: EdgeInsets.symmetric(vertical: 35.0, horizontal: 10.0)
                   ),
+
+                  Container (
+                    height: 210,
+                    child: GestureDetector (
+                      onTap: () {
+                        Navigator.pushNamed(context, '/virus-analyze');
+                      },
+                    ),
+                  )
                 ],
               ),
-            )
+            ),
           ],
         ),
       );
