@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'CountrySelectionTile.dart';
+
 /// Displays a text sheet displaying information about the application.
 class InformationSheet {
   BuildContext _context;
@@ -53,6 +55,7 @@ class InformationSheet {
                                 FlutterI18n.translate(_context, "home_info_data_text1")
                             ),
                           ),
+                          CountrySelectionTile(),
                           new ListTile(
                             leading: new Icon(Icons.warning),
                             contentPadding: _padding,
