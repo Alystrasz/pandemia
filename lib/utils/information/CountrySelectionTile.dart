@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:pandemia/utils/information/Covid19ApiParser.dart';
 
 /// List tile allowing the user to update its country to ensure better virus
 /// exposition computation results.
@@ -13,9 +14,12 @@ class CountrySelectionTile extends StatefulWidget {
 
 class _CountrySelectionTileState extends State<CountrySelectionTile> {
   String _value = "fr_FR";
+  Covid19ApiParser _parser = new Covid19ApiParser();
 
   @override
   Widget build(BuildContext context) {
+    _parser.getCountries();
+
     return ListTile(
       leading: new Icon(Icons.map),
       contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
