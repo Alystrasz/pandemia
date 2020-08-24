@@ -15,7 +15,7 @@ class Covid19ApiParser {
       print(countries);
     }
 
-    Future<void> getCountries () async {
+    Future<List<Country>> getCountries () async {
       String url = "https://api.covid19api.com/countries";
       String encodedUrl = Uri.encodeFull(url);
 
@@ -26,6 +26,11 @@ class Covid19ApiParser {
       }
 
       await _storage.ready;
-      _storage.setItem(_countriesKey, countries);
+      // _storage.setItem(_countriesKey, countries);
+
+      return [
+        Country (name: 'France', identifier: 'FR'),
+        Country (name: 'United Kingdom', identifier: 'GB')
+      ];
     }
 }
