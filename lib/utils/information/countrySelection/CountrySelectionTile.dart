@@ -35,15 +35,12 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
             return CircularProgressIndicator();
           } else {
             List<DropdownMenuItem> _items = new List();
-            print('c' + snapshot.data.length.toString());
             for (Country c in snapshot.data) {
-              // print(c.identifier);
               _items.add(DropdownMenuItem (
                 child: Text(c.name),
                 value: c.identifier
               ));
             }
-            print(_items.length);
             return DropdownButton(
                 value: _value,
                 items: _items,
