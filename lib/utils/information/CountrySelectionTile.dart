@@ -12,10 +12,11 @@ class CountrySelectionTile extends StatefulWidget {
 }
 
 class _CountrySelectionTileState extends State<CountrySelectionTile> {
+  String _value = "fr_FR";
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => _setNewCountryValue('hola'),
       leading: new Icon(Icons.map),
       contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       title: new Text(
@@ -24,11 +25,27 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
       subtitle: Text(
           "Please select your country to ensure better virus exposition computation results."
       ),
-      //trailing: Switch(value: _value, onChanged: (bool newValue) => _setNewValue(newValue)),
+      trailing: DropdownButton(
+          value: _value,
+          items: [
+            DropdownMenuItem(
+              child: Text("France"),
+              value: 'fr_FR',
+            ),
+            DropdownMenuItem(
+              child: Text("United Kingdom"),
+              value: 'UK',
+            ),
+          ],
+          onChanged: (value) => _setNewCountryValue(value)
+      ),
     );
   }
 
-  void _setNewCountryValue(String value) {
+  void _setNewCountryValue (String value) {
     print(value);
+    setState(() {
+      _value = value;
+    });
   }
 }
