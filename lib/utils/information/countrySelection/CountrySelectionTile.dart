@@ -27,23 +27,31 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
       subtitle: Text(
           "Please select your country to ensure better virus exposition computation results."
       ),
-      trailing: FutureBuilder<List<Country>>(
+      trailing: FutureBuilder<List<dynamic>>(
         future: _parser.getCountries(),
-        builder: (context, AsyncSnapshot<List<Country>> snapshot) {
+        builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
           if (!snapshot.hasData) {
             return CircularProgressIndicator();
           } else {
             List<DropdownMenuItem> _items = new List();
-            for (Country c in snapshot.data) {
+            for (dynamic c in snapshot.data) {
               _items.add(DropdownMenuItem (
-                child: Text(c.name),
-                value: c.identifier
+                child: Text(c['name']),
+                value: c['identifier']
               ));
             }
-            return DropdownButton(
-                value: _value,
-                items: _items,
-                onChanged: (value) => _setNewCountryValue(value)
+            return Container (
+              width: 100,
+              child: Flex (
+                direction: Axis.vertical,
+                children: <Widget>[
+                  DropdownButton(
+                      value: _value,
+                      items: _items,
+                      isDense: true,
+                      onChanged: (value) => _setNewCountryValue(value)
+                  )
+                ],),
             );
           }
         }
