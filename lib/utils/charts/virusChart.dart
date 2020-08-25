@@ -62,22 +62,7 @@ class VirusChart extends StatelessWidget {
   }
 
 
-  factory VirusChart.fromRandomData () {
-    List<VirusDayData> series = [];
-
-    DateTime start = new DateTime(2020, 3, 3);
-
-    for (var i=0, len=100; i<len; i++) {
-      series.add(new VirusDayData(
-        time: start.add(Duration(days: i)),
-        activeCases: new Random().nextInt(100000),
-        confirmedCases: new Random().nextInt(100000),
-        deathCases: new Random().nextInt(100000),
-        recoveredCases: new Random().nextInt(100000),
-        province: ""
-      ));
-    }
-
+  factory VirusChart.fromDailyData (List<VirusDayData> series) {
     List<charts.Series<VirusDayData, DateTime>> data = [
       new charts.Series<VirusDayData, DateTime>(
           id: 'Virus',

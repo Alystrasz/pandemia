@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:pandemia/data/state/AppModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
 import 'package:pandemia/utils/charts/virusChart.dart';
 import 'package:pandemia/utils/countrySelection/Covid19ApiParser.dart';
+import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 import 'package:provider/provider.dart';
 
 class CountryVirusProgressCard extends StatelessWidget {
@@ -11,9 +13,6 @@ class CountryVirusProgressCard extends StatelessWidget {
     return new Consumer<AppModel>(
       builder: (context, model, child) {
         Covid19ApiParser parser = new Covid19ApiParser();
-        parser.getCountryData(model.selectedCountry).then((value) {
-          print(value);
-        });
 
         return Container (
           height: 300,
@@ -21,7 +20,17 @@ class CountryVirusProgressCard extends StatelessWidget {
           child: Stack (
             children: <Widget>[
               Container (
-                child: VirusChart.fromRandomData(),
+                child: FutureBuilder<List<VirusDayData>>(
+                  future: parser.getCountryData(model.selectedCountry),
+                  builder: (context, AsyncSnapshot<List<VirusDayData>> snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      return VirusChart.fromDailyData(snapshot.data);
+                    }
+                  }),
                 margin: EdgeInsets.fromLTRB(10, 60, 0, 10),
               ),
 
