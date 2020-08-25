@@ -41,6 +41,9 @@ class Covid19ApiParser {
       }
 
       var countries = await _storage.getItem(_countriesKey);
+      countries.sort((a, b) {
+        return a['name'].toString().compareTo(b['name'].toString());
+      });
       return countries;
     }
 }
