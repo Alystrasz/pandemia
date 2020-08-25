@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
+import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 
 /// Chart used to display virus progression in a given country.
 class VirusChart extends StatelessWidget {
@@ -68,11 +69,12 @@ class VirusChart extends StatelessWidget {
 
     for (var i=0, len=100; i<len; i++) {
       series.add(new VirusDayData(
-          start.add(Duration(days: i)),
-          new Random().nextInt(100000),
-          new Random().nextInt(100000),
-          new Random().nextInt(100000),
-          new Random().nextInt(100000)
+        time: start.add(Duration(days: i)),
+        activeCases: new Random().nextInt(100000),
+        confirmedCases: new Random().nextInt(100000),
+        deathCases: new Random().nextInt(100000),
+        recoveredCases: new Random().nextInt(100000),
+        province: ""
       ));
     }
 
@@ -91,16 +93,4 @@ class VirusChart extends StatelessWidget {
       animate: true,
     );
   }
-}
-
-/// Virus data sample
-class VirusDayData {
-  final DateTime time;
-  final int confirmedCases;
-  final int deathCases;
-  final int recoveredCases;
-  final int activeCases;
-
-  VirusDayData(this.time, this.confirmedCases, this.deathCases,
-      this.recoveredCases, this.activeCases);
 }
