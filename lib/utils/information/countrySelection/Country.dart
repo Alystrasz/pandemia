@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 class Country {
   final String name;
-  final String identifier;
+  final String identifier;  // = API slug
 
   Country ({this.name, this.identifier});
 
@@ -14,7 +12,7 @@ class Country {
   /// Custom builder to keep only needed information
   factory Country.fromApi(dynamic json) {
     return Country(name: json['Country'] as String,
-        identifier: json['ISO2'] as String);
+        identifier: json['Slug'] as String);
   }
 
   factory Country.fromJson(dynamic json) {

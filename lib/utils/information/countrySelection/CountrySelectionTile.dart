@@ -108,6 +108,8 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
   void _loadFavoriteCountry () async {
     await _storage.ready;
     String result = _storage.getItem(_selectedCountryKey);
-    _value =  result == null ? 'GB' : result;
+    setState(() {
+      _value =  result == null ? 'united-kingdom' : result;
+    });
   }
 }
