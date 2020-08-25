@@ -12,7 +12,7 @@ class CountryVirusProgressCard extends StatelessWidget {
         children: <Widget>[
           Container (
             child: VirusChart.fromRandomData(),
-            margin: EdgeInsets.fromLTRB(15, 60, 0, 0),
+            margin: EdgeInsets.fromLTRB(10, 60, 0, 10),
           ),
 
           Container(
