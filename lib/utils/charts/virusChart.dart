@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
@@ -62,9 +64,16 @@ class VirusChart extends StatelessWidget {
   factory VirusChart.fromRandomData () {
     List<VirusDayData> series = [];
 
+    DateTime start = new DateTime(2020, 3, 3);
+
     for (var i=0, len=100; i<len; i++) {
       series.add(new VirusDayData(
-          DateTime.now(), i, 0, 0, 0));
+          start.add(Duration(days: i)),
+          new Random().nextInt(100000),
+          new Random().nextInt(100000),
+          new Random().nextInt(100000),
+          new Random().nextInt(100000)
+      ));
     }
 
     List<charts.Series<VirusDayData, DateTime>> data = [
