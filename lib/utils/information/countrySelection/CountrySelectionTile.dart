@@ -74,10 +74,12 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
                               direction: Axis.vertical,
                               children: <Widget>[
                                 DropdownButton(
+                                    style: TextStyle(color: CustomPalette.text[400], fontSize: 14),
+                                    dropdownColor: CustomPalette.background[500],
                                     value: _value,
                                     items: _items,
                                     isDense: true,
-                                    onChanged: (value) => _setNewCountryValue(value)
+                                    onChanged: (value) => _setNewCountryValue(value),
                                 )
                               ],),
                           );
