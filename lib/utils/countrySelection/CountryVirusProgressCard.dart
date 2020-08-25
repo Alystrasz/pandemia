@@ -20,7 +20,7 @@ class CountryVirusProgressCard extends StatelessWidget {
               "Virus progression",
               style: TextStyle(
                   color: CustomPalette.text[100],
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.w300
               ),
             ),
@@ -32,7 +32,7 @@ class CountryVirusProgressCard extends StatelessWidget {
                 "Confirmed cases evolution",
                 style: TextStyle(
                     color: CustomPalette.text[600],
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.w300
                 ),
               ),

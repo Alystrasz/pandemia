@@ -37,7 +37,7 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
                     'Country',
                     style: TextStyle(
                         color: CustomPalette.text[100],
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.w300
                     ),
                   ),
@@ -49,7 +49,7 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
                       "Please select your country to ensure better virus exposition computation results.",
                       style: TextStyle(
                           color: CustomPalette.text[600],
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.w300
                       ),
                     ),
