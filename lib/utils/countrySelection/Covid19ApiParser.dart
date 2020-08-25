@@ -45,4 +45,17 @@ class Covid19ApiParser {
       });
       return countries;
     }
+
+
+    /// Returns pandemia details for a given country.
+    Future<void> getCountryData (String countrySlug) async {
+      String url = "https://api.covid19api.com/dayone/country/$countrySlug";
+      String encodedUrl = Uri.encodeFull(url);
+
+      var response = await http.get(encodedUrl);
+      var json = jsonDecode(response.body) as List;
+      print(json);
+
+      return null;
+    }
 }
