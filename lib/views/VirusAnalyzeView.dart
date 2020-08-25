@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
+import 'package:pandemia/utils/charts/virusChart.dart';
 import 'package:pandemia/utils/information/countrySelection/CountrySelectionTile.dart';
 
 class VirusAnalyzeView extends StatefulWidget {
@@ -20,7 +21,11 @@ class _VirusAnalyzeViewState extends State<VirusAnalyzeView> {
       ),
       body: ListView(
           children: <Widget>[
-            CountrySelectionTile()
+            CountrySelectionTile(),
+            Container (
+              child: VirusChart.fromRandomData(),
+              height: 300
+            )
           ]
       )
     );
