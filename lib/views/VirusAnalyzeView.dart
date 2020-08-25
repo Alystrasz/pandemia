@@ -1,8 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pandemia/components/home/expositionProgressionCard.dart';
-import 'package:pandemia/components/home/myExpositionCard.dart';
-import 'package:pandemia/components/home/visitedPlacesCard.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
 import 'package:pandemia/utils/information/countrySelection/CountrySelectionTile.dart';
 
