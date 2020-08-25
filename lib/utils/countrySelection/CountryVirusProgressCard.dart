@@ -11,7 +11,9 @@ class CountryVirusProgressCard extends StatelessWidget {
     return new Consumer<AppModel>(
       builder: (context, model, child) {
         Covid19ApiParser parser = new Covid19ApiParser();
-        parser.getCountryData(model.selectedCountry);
+        parser.getCountryData(model.selectedCountry).then((value) {
+          print(value);
+        });
 
         return Container (
           height: 300,

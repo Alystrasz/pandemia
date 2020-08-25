@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
 import 'package:pandemia/utils/countrySelection/Country.dart';
+import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 
 
 /// This class allows to access information from a Covid-19 API.
@@ -48,14 +49,15 @@ class Covid19ApiParser {
 
 
     /// Returns pandemia details for a given country.
-    Future<void> getCountryData (String countrySlug) async {
+    Future<List<VirusDayData>> getCountryData (String countrySlug) async {
       String url = "https://api.covid19api.com/dayone/country/$countrySlug";
       String encodedUrl = Uri.encodeFull(url);
 
       var response = await http.get(encodedUrl);
       var json = jsonDecode(response.body) as List;
-      print(json);
+      List<VirusDayData> data = json.map((dataJson) =>
+        VirusDayData.fromApi(dataJson)).toList();
 
-      return null;
+      return data;
     }
 }
