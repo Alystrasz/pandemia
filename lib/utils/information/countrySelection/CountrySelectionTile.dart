@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pandemia/utils/information/countrySelection/Country.dart';
+import 'package:pandemia/utils/CustomPalette.dart';
 import 'package:pandemia/utils/information/countrySelection/Covid19ApiParser.dart';
-
-import '../../CustomPalette.dart';
+import 'package:localstorage/localstorage.dart';
 
 /// List tile allowing the user to update its country to ensure better virus
 /// exposition computation results.
@@ -15,11 +14,15 @@ class CountrySelectionTile extends StatefulWidget {
 }
 
 class _CountrySelectionTileState extends State<CountrySelectionTile> {
-  String _value = "FR";
+  String _value = "";
   Covid19ApiParser _parser = new Covid19ApiParser();
+  final LocalStorage _storage = new LocalStorage('pandemia_app.json');
+  final String _selectedCountryKey = "fav-country";
 
   @override
   Widget build(BuildContext context) {
+    _loadFavoriteCountry();
+
     return Container (
       margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
       child: Stack (
@@ -95,9 +98,16 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
     );
   }
 
-  void _setNewCountryValue (String value) {
+  void _setNewCountryValue (String value) async {
     setState(() {
       _value = value;
     });
+    _storage.setItem(_selectedCountryKey, _value);
+  }
+
+  void _loadFavoriteCountry () async {
+    await _storage.ready;
+    String result = _storage.getItem(_selectedCountryKey);
+    _value =  result == null ? 'GB' : result;
   }
 }
