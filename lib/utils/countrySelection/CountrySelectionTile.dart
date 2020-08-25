@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pandemia/data/state/AppModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:pandemia/utils/countrySelection/Covid19ApiParser.dart';
+import 'package:provider/provider.dart';
 
 
 /// List tile allowing the user to update its country to ensure better virus
@@ -104,6 +106,7 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
       _value = value;
     });
     _storage.setItem(_selectedCountryKey, _value);
+    Provider.of<AppModel>(context, listen: false).setSelectedCountry(value);
   }
 
   void _loadFavoriteCountry () async {
