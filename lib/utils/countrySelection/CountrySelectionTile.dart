@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
-import 'package:pandemia/utils/information/countrySelection/Covid19ApiParser.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:pandemia/utils/countrySelection/Covid19ApiParser.dart';
+
 
 /// List tile allowing the user to update its country to ensure better virus
 /// exposition computation results.

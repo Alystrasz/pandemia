@@ -1,8 +1,7 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
-import 'package:pandemia/utils/information/countrySelection/Country.dart';
+import 'package:pandemia/utils/countrySelection/Country.dart';
 
 
 /// This class allows to access information from a Covid-19 API.
