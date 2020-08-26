@@ -28,7 +28,20 @@ class CountryVirusProgressCard extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       );
                     } else {
-                      return VirusChart.fromDailyData(snapshot.data);
+                      return snapshot.data.length == 0 ?
+                        Container (
+                            child: Center (
+                              child: Text(
+                                "No data for this country.",
+                                style: TextStyle(
+                                    color: CustomPalette.text[100],
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w300
+                                ),
+                              ),
+                            ),
+                        ) :
+                        VirusChart.fromDailyData(snapshot.data);
                     }
                   }),
                 margin: EdgeInsets.fromLTRB(10, 60, 0, 10),
