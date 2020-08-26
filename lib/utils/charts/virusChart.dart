@@ -26,6 +26,17 @@ class VirusChart extends StatelessWidget {
       seriesList,
       animate: animate,
       dateTimeFactory: const charts.LocalDateTimeFactory(),
+      behaviors: [new charts.SeriesLegend(
+          desiredMaxColumns: 2,
+          insideJustification: charts.InsideJustification.topEnd,
+          outsideJustification: charts.OutsideJustification.end,
+          position: charts.BehaviorPosition.top,
+          entryTextStyle: charts.TextStyleSpec(
+            color: charts.Color(r: 200, g: 200, b: 200),
+            fontSize: 12,
+          ),
+        cellPadding: EdgeInsets.only(right: 15),
+      )],
 
       primaryMeasureAxis: new charts.NumericAxisSpec(
         tickProviderSpec: new charts.StaticNumericTickProviderSpec( ticks ),
@@ -66,28 +77,28 @@ class VirusChart extends StatelessWidget {
 
     List<charts.Series<VirusDayData, DateTime>> data = [
       new charts.Series<VirusDayData, DateTime>(
-          id: 'confirmedCasesCurve',
+          id: 'Confirmed cases',
           colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
           domainFn: (VirusDayData exposition, _) => exposition.time,
           measureFn: (VirusDayData exposition, _) => exposition.confirmedCases,
           data: series
       ),
       new charts.Series<VirusDayData, DateTime>(
-          id: 'deathCasesCurve',
+          id: 'Death cases',
           colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
           domainFn: (VirusDayData exposition, _) => exposition.time,
           measureFn: (VirusDayData exposition, _) => exposition.deathCases,
           data: series
       ),
       new charts.Series<VirusDayData, DateTime>(
-          id: 'recoveredCasesCurve',
+          id: 'Recovered cases',
           colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
           domainFn: (VirusDayData exposition, _) => exposition.time,
           measureFn: (VirusDayData exposition, _) => exposition.recoveredCases,
           data: series
       ),
       new charts.Series<VirusDayData, DateTime>(
-          id: 'activeCasesCurve',
+          id: 'Active cases',
           colorFn: (_, __) => charts.MaterialPalette.yellow.shadeDefault,
           domainFn: (VirusDayData exposition, _) => exposition.time,
           measureFn: (VirusDayData exposition, _) => exposition.activeCases,
