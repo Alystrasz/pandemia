@@ -66,10 +66,31 @@ class VirusChart extends StatelessWidget {
 
     List<charts.Series<VirusDayData, DateTime>> data = [
       new charts.Series<VirusDayData, DateTime>(
-          id: 'Virus',
+          id: 'confirmedCasesCurve',
           colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
           domainFn: (VirusDayData exposition, _) => exposition.time,
           measureFn: (VirusDayData exposition, _) => exposition.confirmedCases,
+          data: series
+      ),
+      new charts.Series<VirusDayData, DateTime>(
+          id: 'deathCasesCurve',
+          colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+          domainFn: (VirusDayData exposition, _) => exposition.time,
+          measureFn: (VirusDayData exposition, _) => exposition.deathCases,
+          data: series
+      ),
+      new charts.Series<VirusDayData, DateTime>(
+          id: 'recoveredCasesCurve',
+          colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+          domainFn: (VirusDayData exposition, _) => exposition.time,
+          measureFn: (VirusDayData exposition, _) => exposition.recoveredCases,
+          data: series
+      ),
+      new charts.Series<VirusDayData, DateTime>(
+          id: 'activeCasesCurve',
+          colorFn: (_, __) => charts.MaterialPalette.yellow.shadeDefault,
+          domainFn: (VirusDayData exposition, _) => exposition.time,
+          measureFn: (VirusDayData exposition, _) => exposition.activeCases,
           data: series
       )
     ];
