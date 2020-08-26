@@ -23,9 +23,13 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
   final String _selectedCountryKey = "fav-country";
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     _loadFavoriteCountry();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Container (
       margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
       child: Stack (
@@ -115,5 +119,6 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
     setState(() {
       _value =  result == null ? 'united-kingdom' : result;
     });
+    Provider.of<AppModel>(context, listen: false).setSelectedCountry(_value);
   }
 }

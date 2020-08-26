@@ -23,7 +23,7 @@ class CountryVirusProgressCard extends StatelessWidget {
                 child: FutureBuilder<List<VirusDayData>>(
                   future: parser.getCountryData(model.selectedCountry),
                   builder: (context, AsyncSnapshot<List<VirusDayData>> snapshot) {
-                    if (!snapshot.hasData) {
+                    if (!snapshot.hasData || model.selectedCountry == '') {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
