@@ -9,32 +9,25 @@ import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 class VirusChart extends StatelessWidget {
   final List<charts.Series> seriesList;
   final bool animate;
+  final int max;
 
-  VirusChart (this.seriesList, {this.animate});
+  VirusChart (this.seriesList, this.max, {this.animate});
 
   @override
   Widget build(BuildContext context) {
+    int tick = (max/10).toInt();
+    List<charts.TickSpec<num>> ticks = new List();
+    for (int i=0; i<11; i++) {
+      ticks.add(charts.TickSpec<num>(tick*i));
+    }
+
     return new charts.TimeSeriesChart(
       seriesList,
       animate: animate,
       dateTimeFactory: const charts.LocalDateTimeFactory(),
 
       primaryMeasureAxis: new charts.NumericAxisSpec(
-        tickProviderSpec: new charts.StaticNumericTickProviderSpec(
-          <charts.TickSpec<num>>[
-            charts.TickSpec<num>(0),
-            charts.TickSpec<num>(10000),
-            charts.TickSpec<num>(20000),
-            charts.TickSpec<num>(30000),
-            charts.TickSpec<num>(40000),
-            charts.TickSpec<num>(50000),
-            charts.TickSpec<num>(60000),
-            charts.TickSpec<num>(70000),
-            charts.TickSpec<num>(80000),
-            charts.TickSpec<num>(90000),
-            charts.TickSpec<num>(100000),
-          ],
-        ),
+        tickProviderSpec: new charts.StaticNumericTickProviderSpec( ticks ),
           renderSpec: new charts.GridlineRendererSpec(
             // Tick and Label styling here.
               labelStyle: new charts.TextStyleSpec(
@@ -63,6 +56,13 @@ class VirusChart extends StatelessWidget {
 
 
   factory VirusChart.fromDailyData (List<VirusDayData> series) {
+    int max = 0;
+    for (var d in series) {
+      if (d.confirmedCases > max) {
+        max = d.confirmedCases;
+      }
+    }
+
     List<charts.Series<VirusDayData, DateTime>> data = [
       new charts.Series<VirusDayData, DateTime>(
           id: 'Virus',
@@ -75,6 +75,7 @@ class VirusChart extends StatelessWidget {
 
     return new VirusChart (
       data,
+      max,
       animate: true,
     );
   }
