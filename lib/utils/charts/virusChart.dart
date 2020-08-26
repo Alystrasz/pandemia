@@ -15,7 +15,8 @@ class VirusChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int tick = (max/10).toInt();
+    int tick = (max~/10).toInt();
+
     List<charts.TickSpec<num>> ticks = new List();
     for (int i=0; i<11; i++) {
       ticks.add(charts.TickSpec<num>(tick*i));
@@ -40,7 +41,7 @@ class VirusChart extends StatelessWidget {
       ),
 
       domainAxis: new charts.DateTimeAxisSpec(
-          tickProviderSpec: charts.DayTickProviderSpec(increments: [3]),
+          tickProviderSpec: charts.DayTickProviderSpec(increments: [30]),
           renderSpec: new charts.GridlineRendererSpec(
             // Tick and Label styling here.
               labelStyle: new charts.TextStyleSpec(
