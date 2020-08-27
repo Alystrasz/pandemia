@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pandemia/data/state/AppModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
 import 'package:pandemia/utils/charts/virusChart.dart';
@@ -10,7 +11,23 @@ import 'package:provider/provider.dart';
 class CountryVirusProgressCard extends StatelessWidget {
   void _onSelectionChanged (dynamic data) {
     VirusDayData stats = data.selectedDatum[0].datum;
-    print(stats);
+    String date = "${stats.time.day < 10 ? "0" + stats.time.day.toString() : stats.time.day}/"
+        "${stats.time.month < 10 ?
+          "0" + stats.time.month.toString() :
+          stats.time.month}"
+        "/${stats.time.year}";
+    String message = "$date\nConfirmed cases: ${stats.confirmedCases}"
+        "\nActive cases: ${stats.activeCases}"
+        "\nRecovered cases: ${stats.recoveredCases}"
+        "\nDeath cases: ${stats.deathCases}";
+
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 2,
+        fontSize: 16.0
+    );
   }
 
   @override
