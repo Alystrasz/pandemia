@@ -50,20 +50,31 @@ class CountryVirusProgressCard extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       );
                     } else {
-                      return snapshot.data.length == 0 ?
-                        Container (
-                            child: Center (
-                              child: Text(
-                                "No data for this country.",
-                                style: TextStyle(
-                                    color: CustomPalette.text[100],
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w300
-                                ),
+                      if (snapshot.data.length == 0) {
+                        return Container (
+                          child: Center (
+                            child: Text (
+                              "No data for this country.",
+                              style: TextStyle(
+                                  color: CustomPalette.text[100],
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w300
                               ),
                             ),
-                        ) :
-                        VirusChart.fromDailyData(snapshot.data, _onSelectionChanged);
+                          ),
+                        );
+                      } else {
+                        List<String> provinces = new List();
+                        for (var stat in snapshot.data) {
+                          if (!provinces.contains(stat.province))
+                            provinces.add(stat.province);
+                        }
+
+                        if (provinces.length > 1)
+                          print("Multiple provinces detected, caution!");
+
+                        return VirusChart.fromDailyData(snapshot.data, _onSelectionChanged);
+                      }
                     }
                   }),
                 margin: EdgeInsets.fromLTRB(10, 40, 0, 10),
