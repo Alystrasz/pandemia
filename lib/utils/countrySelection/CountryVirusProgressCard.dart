@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -7,6 +9,8 @@ import 'package:pandemia/utils/charts/virusChart.dart';
 import 'package:pandemia/utils/countrySelection/Covid19ApiParser.dart';
 import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 import 'package:provider/provider.dart';
+
+import 'ProvinceSelectionDialog.dart';
 
 class CountryVirusProgressCard extends StatelessWidget {
   void _onSelectionChanged (dynamic data) {
@@ -70,8 +74,13 @@ class CountryVirusProgressCard extends StatelessWidget {
                             provinces.add(stat.province);
                         }
 
-                        if (provinces.length > 1)
+                        if (provinces.length > 1) {
                           print("Multiple provinces detected, caution!\n$provinces");
+                          Timer(Duration(milliseconds: 1), () {
+                            var dialog = ProvinceSelectionDialog (provinces);
+                            dialog.show(context);
+                          });
+                        }
 
                         return VirusChart.fromDailyData(
                             snapshot.data, _onSelectionChanged,
