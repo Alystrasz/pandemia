@@ -65,13 +65,13 @@ class MyExpositionCard extends StatelessWidget {
                   ),
 
                   Container (
-                    height: 210,
+                    height: 226,
                     child: GestureDetector (
                       onTap: () {
                         Navigator.pushNamed(context, '/virus-analyze');
                       },
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
