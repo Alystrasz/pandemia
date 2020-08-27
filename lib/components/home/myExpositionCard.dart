@@ -50,6 +50,20 @@ class MyExpositionCard extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 35.0, horizontal: 10.0)
                   ),
 
+                  Container(
+                      child: Center (
+                        child: new Text(
+                          "Touch to access virus progression details",
+                          style: TextStyle(
+                              color: CustomPalette.text[600],
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300
+                          ),
+                        ),
+                      ),
+                      padding: EdgeInsets.only(top: 200, bottom: 10)
+                  ),
+
                   Container (
                     height: 210,
                     child: GestureDetector (
