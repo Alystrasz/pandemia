@@ -35,6 +35,14 @@ class VirusChart extends StatelessWidget {
           ),
         cellPadding: EdgeInsets.only(right: 15),
       )],
+      selectionModels: [
+        new charts.SelectionModelConfig(
+          type: charts.SelectionModelType.info,
+          changedListener: (e) {
+            print(e.selectedDatum[0].datum as VirusDayData);
+          },
+        )
+      ],
 
       primaryMeasureAxis: new charts.NumericAxisSpec(
         tickProviderSpec: new charts.StaticNumericTickProviderSpec( ticks ),
