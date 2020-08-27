@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -66,12 +68,17 @@ class MyExpositionCard extends StatelessWidget {
 
                   Container (
                     height: 226,
-                    child: GestureDetector (
-                      onTap: () {
-                        Navigator.pushNamed(context, '/virus-analyze');
+                    width: 5000,
+                    child: FlatButton(
+                      child: Text(""),
+                      onPressed: () {
+                        // Let the animation roll before showing component
+                        Timer(Duration(milliseconds: 175), () =>
+                            Navigator.pushNamed(context, '/virus-analyze'));
                       },
+                      splashColor: CustomPalette.background[100]
                     ),
-                  ),
+                  )
                 ],
               ),
             ),
