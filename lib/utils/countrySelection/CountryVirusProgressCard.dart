@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pandemia/data/state/AppModel.dart';
+import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
 import 'package:pandemia/utils/charts/virusChart.dart';
 import 'package:pandemia/utils/countrySelection/Covid19ApiParser.dart';
@@ -36,7 +36,7 @@ class CountryVirusProgressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Consumer<AppModel>(
+    return new Consumer<VirusGraphModel>(
       builder: (context, model, child) {
         Covid19ApiParser parser = new Covid19ApiParser();
 

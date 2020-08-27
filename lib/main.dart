@@ -6,14 +6,18 @@ import 'package:pandemia/views/VirusAnalyzeView.dart';
 import 'package:provider/provider.dart';
 import 'data/state/AppModel.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'data/state/VirusGraphModel.dart';
 
 void main() async {
   await DotEnv().load('lib/.env.generated');
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => AppModel(),
+    MultiProvider (
+      providers: [
+        ChangeNotifierProvider(create: (context) => AppModel()),
+        ChangeNotifierProvider(create: (context) => VirusGraphModel())
+      ],
       child: MyApp(),
-    ),
+    )
   );
 }
 

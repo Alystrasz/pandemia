@@ -9,12 +9,6 @@ class AppModel extends ChangeNotifier {
   List<DailyReport> reports = [];
   AppDatabase database = new AppDatabase();
   static String apiKey = DotEnv().env['GMAPS_PLACES_API_KEY'];
-  String selectedCountry = "";
-
-  setSelectedCountry (String value) {
-    this.selectedCountry = value;
-    notifyListeners();
-  }
 
   setTabIndex (int index) {
     this.tabIndex = index;
