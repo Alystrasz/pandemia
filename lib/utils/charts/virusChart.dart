@@ -71,10 +71,14 @@ class VirusChart extends StatelessWidget {
     );
   }
 
+  factory VirusChart.fromDailyData (List<VirusDayData> series, Function changeCallback, {String selectedProvince}) {
+    List<VirusDayData> graphSeries =
+        selectedProvince != null ?
+            series.where((VirusDayData d) => d.province == selectedProvince).toList() :
+            series;
 
-  factory VirusChart.fromDailyData (List<VirusDayData> series, Function changeCallback) {
     int max = 0;
-    for (var d in series) {
+    for (var d in graphSeries) {
       if (d.confirmedCases > max) {
         max = d.confirmedCases;
       }
@@ -86,28 +90,28 @@ class VirusChart extends StatelessWidget {
           colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
           domainFn: (VirusDayData exposition, _) => exposition.time,
           measureFn: (VirusDayData exposition, _) => exposition.confirmedCases,
-          data: series
+          data: graphSeries
       ),
       new charts.Series<VirusDayData, DateTime>(
           id: 'Death cases',
           colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
           domainFn: (VirusDayData exposition, _) => exposition.time,
           measureFn: (VirusDayData exposition, _) => exposition.deathCases,
-          data: series
+          data: graphSeries
       ),
       new charts.Series<VirusDayData, DateTime>(
           id: 'Recovered cases',
           colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
           domainFn: (VirusDayData exposition, _) => exposition.time,
           measureFn: (VirusDayData exposition, _) => exposition.recoveredCases,
-          data: series
+          data: graphSeries
       ),
       new charts.Series<VirusDayData, DateTime>(
           id: 'Active cases',
           colorFn: (_, __) => charts.MaterialPalette.yellow.shadeDefault,
           domainFn: (VirusDayData exposition, _) => exposition.time,
           measureFn: (VirusDayData exposition, _) => exposition.activeCases,
-          data: series
+          data: graphSeries
       )
     ];
 

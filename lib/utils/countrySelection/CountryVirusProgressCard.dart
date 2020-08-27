@@ -73,7 +73,10 @@ class CountryVirusProgressCard extends StatelessWidget {
                         if (provinces.length > 1)
                           print("Multiple provinces detected, caution!");
 
-                        return VirusChart.fromDailyData(snapshot.data, _onSelectionChanged);
+                        return VirusChart.fromDailyData(
+                            snapshot.data, _onSelectionChanged,
+                            selectedProvince: provinces.length > 1 ? provinces[0] : null,
+                        );
                       }
                     }
                   }),
