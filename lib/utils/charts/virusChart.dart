@@ -8,8 +8,9 @@ class VirusChart extends StatelessWidget {
   final List<charts.Series> seriesList;
   final bool animate;
   final int max;
+  final Function changeCallback;
 
-  VirusChart (this.seriesList, this.max, {this.animate});
+  VirusChart (this.seriesList, this.max, this.changeCallback, {this.animate});
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +39,7 @@ class VirusChart extends StatelessWidget {
       selectionModels: [
         new charts.SelectionModelConfig(
           type: charts.SelectionModelType.info,
-          changedListener: (e) {
-            print(e.selectedDatum[0].datum as VirusDayData);
-          },
+          changedListener: this.changeCallback,
         )
       ],
 
@@ -73,7 +72,7 @@ class VirusChart extends StatelessWidget {
   }
 
 
-  factory VirusChart.fromDailyData (List<VirusDayData> series) {
+  factory VirusChart.fromDailyData (List<VirusDayData> series, Function changeCallback) {
     int max = 0;
     for (var d in series) {
       if (d.confirmedCases > max) {
@@ -115,6 +114,7 @@ class VirusChart extends StatelessWidget {
     return new VirusChart (
       data,
       max,
+      changeCallback,
       animate: true,
     );
   }

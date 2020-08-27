@@ -8,6 +8,11 @@ import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 import 'package:provider/provider.dart';
 
 class CountryVirusProgressCard extends StatelessWidget {
+  void _onSelectionChanged (dynamic data) {
+    VirusDayData stats = data.selectedDatum[0].datum;
+    print(stats);
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Consumer<AppModel>(
@@ -41,7 +46,7 @@ class CountryVirusProgressCard extends StatelessWidget {
                               ),
                             ),
                         ) :
-                        VirusChart.fromDailyData(snapshot.data);
+                        VirusChart.fromDailyData(snapshot.data, _onSelectionChanged);
                     }
                   }),
                 margin: EdgeInsets.fromLTRB(10, 40, 0, 10),
