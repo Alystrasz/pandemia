@@ -44,7 +44,7 @@ class CountryVirusProgressCard extends StatelessWidget {
                         VirusChart.fromDailyData(snapshot.data);
                     }
                   }),
-                margin: EdgeInsets.fromLTRB(10, 10, 0, 10),
+                margin: EdgeInsets.fromLTRB(10, 40, 0, 10),
               ),
 
               Container(
