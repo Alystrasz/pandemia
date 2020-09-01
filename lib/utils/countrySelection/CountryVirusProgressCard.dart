@@ -80,11 +80,15 @@ class CountryVirusProgressCard extends StatelessWidget {
                             var dialog = ProvinceSelectionDialog (provinces);
                             dialog.show(context);
                           });
-                        }
-
-                        return VirusChart.fromDailyData(
+                        } else {
+                          return VirusChart.fromDailyData(
                             snapshot.data, _onSelectionChanged,
                             selectedProvince: provinces.length > 1 ? provinces[0] : null,
+                          );
+                        }
+
+                        return Center (
+                          child: CircularProgressIndicator(),
                         );
                       }
                     }
