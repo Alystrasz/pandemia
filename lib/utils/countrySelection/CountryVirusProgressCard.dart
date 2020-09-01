@@ -6,7 +6,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
 import 'package:pandemia/utils/charts/virusChart.dart';
-import 'package:pandemia/utils/countrySelection/Covid19ApiParser.dart';
 import 'package:pandemia/utils/countrySelection/ProvinceSelectionDialog.dart';
 import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +36,6 @@ class CountryVirusProgressCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Consumer<VirusGraphModel>(
       builder: (context, model, child) {
-        Covid19ApiParser parser = new Covid19ApiParser();
 
         return Container (
           height: 300,
@@ -46,7 +44,8 @@ class CountryVirusProgressCard extends StatelessWidget {
             children: <Widget>[
               Container (
                 child: FutureBuilder<List<VirusDayData>>(
-                  future: parser.getCountryData(model.selectedCountry),
+                  future: Provider.of<VirusGraphModel>(context, listen: true)
+                      .update(),
                   builder: (context, AsyncSnapshot<List<VirusDayData>> snapshot) {
                     print(model);
 
@@ -83,7 +82,7 @@ class CountryVirusProgressCard extends StatelessWidget {
                           }
 
                           if (provinces.length > 1) {
-                            print("Multiple provinces detected, caution!\n$provinces");
+                            print("multiple provinces detected");
                             Timer(Duration(milliseconds: 1), () {
                               var dialog = ProvinceSelectionDialog (provinces);
                               dialog.show(context);

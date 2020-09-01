@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:pandemia/utils/countrySelection/Covid19ApiParser.dart';
+import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 
 /// Holds data used while drawing virus progression graph.
 class VirusGraphModel extends ChangeNotifier {
@@ -9,6 +11,9 @@ class VirusGraphModel extends ChangeNotifier {
   final LocalStorage _storage = new LocalStorage('pandemia_app.json');
   final String _selectedCountryKey = "fav-country";
   final String _selectedProvinceKey = "fav-province";
+
+  Covid19ApiParser parser = new Covid19ApiParser();
+  
 
   setSelectedCountry (String value) {
     this.selectedCountry = value;
@@ -36,6 +41,16 @@ class VirusGraphModel extends ChangeNotifier {
     notifyListeners();
 
     return result;
+  }
+
+  /// Returns data for the current saved country+province.
+  Future<List<VirusDayData>> update () async {
+    List<VirusDayData> series = await parser.getCountryData(this.selectedCountry);
+    List<VirusDayData> graphSeries =
+      this.province != null ?
+        series.where((VirusDayData d) => d.province == province).toList() :
+        series;
+    return graphSeries;
   }
 
   String toString () {
