@@ -10,6 +10,7 @@ class ProvinceSelectionDialog {
   final LocalStorage _storage = new LocalStorage('pandemia_app.json');
 
   ProvinceSelectionDialog (List<String> provinces) {
+     provinces.sort((a, b) => a.compareTo(b));
     _dialog = SimpleDialog(
       title: const Text('Choose a province'),
       children: provinces.map((String p) => ListTile(
