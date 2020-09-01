@@ -71,7 +71,7 @@ class CountryVirusProgressCard extends StatelessWidget {
                         );
                       } else {
                         // checking if a province has been selected
-                        if (model.province != '') {
+                        if (model.province != null) {
                           return VirusChart.fromDailyData(
                             snapshot.data, _onSelectionChanged,
                             selectedProvince: model.province

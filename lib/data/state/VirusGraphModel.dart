@@ -7,7 +7,7 @@ class VirusGraphModel extends ChangeNotifier {
 
   setSelectedCountry (String value) {
     this.selectedCountry = value;
-    this.province = "";
+    this.province = null;
     notifyListeners();
   }
 
