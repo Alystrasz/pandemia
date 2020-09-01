@@ -16,6 +16,12 @@ class VirusGraphModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  init (String country, String province) {
+    this.selectedCountry = country;
+    this.province = province;
+    notifyListeners();
+  }
+
   String toString () {
     return "VirusGraphModel {selectedCountry: $selectedCountry, province: $province}";
   }

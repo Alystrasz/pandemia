@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 /// List tile allowing the user to update its country to ensure better virus
 /// exposition computation results.
 class CountrySelectionTile extends StatefulWidget {
+  static String selectedProvinceKey = "fav-province";
+
   @override
   State<StatefulWidget> createState() {
     return _CountrySelectionTileState();
@@ -116,9 +118,11 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
   void _loadFavoriteCountry () async {
     await _storage.ready;
     String result = _storage.getItem(_selectedCountryKey);
+    String province = _storage.getItem(CountrySelectionTile.selectedProvinceKey);
     setState(() {
       _value =  result == null ? 'united-kingdom' : result;
     });
-    Provider.of<VirusGraphModel>(context, listen: false).setSelectedCountry(_value);
+    Provider.of<VirusGraphModel>(context, listen: false)
+        .init(_value, province == null ? '' : province);
   }
 }
