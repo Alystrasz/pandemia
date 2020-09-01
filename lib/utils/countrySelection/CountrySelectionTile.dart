@@ -112,6 +112,7 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
       _value = value;
     });
     _storage.setItem(_selectedCountryKey, _value);
+    _storage.setItem(CountrySelectionTile.selectedProvinceKey, null);
     Provider.of<VirusGraphModel>(context, listen: false).setSelectedCountry(value);
   }
 
