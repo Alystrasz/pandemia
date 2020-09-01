@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
-import 'package:localstorage/localstorage.dart';
 import 'package:pandemia/utils/countrySelection/Covid19ApiParser.dart';
 import 'package:provider/provider.dart';
 
@@ -10,8 +9,6 @@ import 'package:provider/provider.dart';
 /// List tile allowing the user to update its country to ensure better virus
 /// exposition computation results.
 class CountrySelectionTile extends StatefulWidget {
-  static String selectedProvinceKey = "fav-province";
-
   @override
   State<StatefulWidget> createState() {
     return _CountrySelectionTileState();
@@ -21,8 +18,6 @@ class CountrySelectionTile extends StatefulWidget {
 class _CountrySelectionTileState extends State<CountrySelectionTile> {
   String _value = "";
   Covid19ApiParser _parser = new Covid19ApiParser();
-  final LocalStorage _storage = new LocalStorage('pandemia_app.json');
-  final String _selectedCountryKey = "fav-country";
 
   @override
   void initState() {
@@ -111,19 +106,13 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
     setState(() {
       _value = value;
     });
-    _storage.setItem(_selectedCountryKey, _value);
-    _storage.setItem(CountrySelectionTile.selectedProvinceKey, null);
     Provider.of<VirusGraphModel>(context, listen: false).setSelectedCountry(value);
   }
 
   void _loadFavoriteCountry () async {
-    await _storage.ready;
-    String result = _storage.getItem(_selectedCountryKey);
-    String province = _storage.getItem(CountrySelectionTile.selectedProvinceKey);
+    String result = await Provider.of<VirusGraphModel>(context, listen: false).init();
     setState(() {
       _value =  result == null ? 'united-kingdom' : result;
     });
-    Provider.of<VirusGraphModel>(context, listen: false)
-        .init(_value, province == null ? '' : province);
   }
 }
