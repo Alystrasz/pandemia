@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
-import 'package:pandemia/utils/countrySelection/CountrySelectionTile.dart';
-import 'package:pandemia/utils/countrySelection/CountryVirusProgressCard.dart';
+import 'package:pandemia/components/virusAnalysis/CountrySelectionTile.dart';
+import 'package:pandemia/components/virusAnalysis/CountryVirusProgressCard.dart';
 
 class VirusAnalyzeView extends StatefulWidget {
   @override

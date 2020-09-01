@@ -6,7 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
 import 'package:pandemia/utils/charts/virusChart.dart';
-import 'package:pandemia/utils/countrySelection/ProvinceSelectionDialog.dart';
+import 'package:pandemia/components/virusAnalysis/ProvinceSelectionDialog.dart';
 import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 import 'package:provider/provider.dart';
 
