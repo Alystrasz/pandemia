@@ -7,10 +7,9 @@ import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
 import 'package:pandemia/utils/charts/virusChart.dart';
 import 'package:pandemia/utils/countrySelection/Covid19ApiParser.dart';
+import 'package:pandemia/utils/countrySelection/ProvinceSelectionDialog.dart';
 import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 import 'package:provider/provider.dart';
-
-import 'ProvinceSelectionDialog.dart';
 
 class CountryVirusProgressCard extends StatelessWidget {
   void _onSelectionChanged (dynamic data) {
