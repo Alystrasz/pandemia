@@ -32,7 +32,11 @@ class ProvinceSelectionDialog {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return _dialog;
+        return WillPopScope(
+            // ignore: missing_return
+            onWillPop: (){},
+            child: _dialog
+        );
       },
     );
   }
