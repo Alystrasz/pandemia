@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/provider.dart';
 
 class ProvinceSelectionDialog {
   SimpleDialog _dialog;
@@ -11,7 +10,7 @@ class ProvinceSelectionDialog {
     _dialog = SimpleDialog(
       title: const Text('Choose a province'),
       children: provinces.map((String p) => ListTile(
-        title: Text(p),
+        title: Text(p == '' ? "Home country" : p),
         onTap: () {
           Provider.of<VirusGraphModel>(_context).setProvince(p);
           Navigator.pop(_context);
