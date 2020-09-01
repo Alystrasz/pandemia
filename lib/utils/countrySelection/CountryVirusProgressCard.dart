@@ -85,7 +85,7 @@ class CountryVirusProgressCard extends StatelessWidget {
                             print("multiple provinces detected");
                             Timer(Duration(milliseconds: 1), () {
                               var dialog = ProvinceSelectionDialog (provinces);
-                              dialog.show(context);
+                              dialog.show(context, snapshot.data);
                             });
                           } else {
                             return VirusChart.fromDailyData(

@@ -13,6 +13,9 @@ class VirusGraphModel extends ChangeNotifier {
   final String _selectedProvinceKey = "fav-province";
 
   Covid19ApiParser parser = new Covid19ApiParser();
+  // This field is used when a country have several provinces, to avoid doing
+  // an additional http call to filter data.
+  List<VirusDayData> _data;
   
 
   setSelectedCountry (String value) {
@@ -23,8 +26,10 @@ class VirusGraphModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  setProvince (String value) {
+  setProvince (String value, List<VirusDayData> countryData) {
     this.province = value;
+    this._data = countryData;
+
     _storage.setItem(_selectedProvinceKey, value);
     notifyListeners();
   }
@@ -44,8 +49,10 @@ class VirusGraphModel extends ChangeNotifier {
   }
 
   /// Returns data for the current saved country+province.
+  /// Is called each time a country is selected by the user.
   Future<List<VirusDayData>> update () async {
-    List<VirusDayData> series = await parser.getCountryData(this.selectedCountry);
+    List<VirusDayData> series = _data != null ? _data : await parser.getCountryData(this.selectedCountry);
+    _data = null;
     List<VirusDayData> graphSeries =
       this.province != null ?
         series.where((VirusDayData d) => d.province == province).toList() :
