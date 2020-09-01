@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
 import 'package:pandemia/utils/countrySelection/Country.dart';
@@ -52,8 +53,18 @@ class Covid19ApiParser {
     Future<List<VirusDayData>> getCountryData (String countrySlug) async {
       String url = "https://api.covid19api.com/dayone/country/$countrySlug";
       String encodedUrl = Uri.encodeFull(url);
+      print('hitting $url');
 
-      var response = await http.get(encodedUrl);
+      var response = await http.get(encodedUrl).timeout(Duration(seconds: 10), onTimeout: () {
+        Fluttertoast.showToast(
+            msg: "API connection failed. Please try again later.",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 2,
+            fontSize: 16.0
+        );
+        return new http.Response("timeout", 504);
+      });
       var json = jsonDecode(response.body) as List;
       List<VirusDayData> data = json.map((dataJson) =>
         VirusDayData.fromApi(dataJson)).toList();
