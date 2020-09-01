@@ -30,6 +30,7 @@ class ProvinceSelectionDialog {
     this._context = context;
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return _dialog;
       },
