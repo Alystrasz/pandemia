@@ -51,6 +51,10 @@ class Covid19ApiParser {
 
     /// Returns pandemia details for a given country.
     Future<List<VirusDayData>> getCountryData (String countrySlug) async {
+      if (countrySlug == '') {
+        return null;
+      }
+
       String url = "https://api.covid19api.com/dayone/country/$countrySlug";
       String encodedUrl = Uri.encodeFull(url);
       print('hitting $url');
