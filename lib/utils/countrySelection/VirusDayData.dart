@@ -22,7 +22,7 @@ class VirusDayData {
   }
 
   String toString () {
-    return "VirusDayData (time: $time, confirmedCases: $confirmedCases, "
+    return "VirusDayData (province: $province, time: $time, confirmedCases: $confirmedCases, "
         "deathCases: $deathCases, recoveredCases: $recoveredCases, "
         "activeCases: $activeCases)";
   }
