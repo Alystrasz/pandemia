@@ -49,6 +49,8 @@ class CountryVirusProgressCard extends StatelessWidget {
                 child: FutureBuilder<List<VirusDayData>>(
                   future: parser.getCountryData(model.selectedCountry),
                   builder: (context, AsyncSnapshot<List<VirusDayData>> snapshot) {
+                    print(model);
+
                     if (!snapshot.hasData || model.selectedCountry == '') {
                       return Center(
                         child: CircularProgressIndicator(),
@@ -68,28 +70,36 @@ class CountryVirusProgressCard extends StatelessWidget {
                           ),
                         );
                       } else {
-                        List<String> provinces = new List();
-                        for (var stat in snapshot.data) {
-                          if (!provinces.contains(stat.province))
-                            provinces.add(stat.province);
-                        }
-
-                        if (provinces.length > 1) {
-                          print("Multiple provinces detected, caution!\n$provinces");
-                          Timer(Duration(milliseconds: 1), () {
-                            var dialog = ProvinceSelectionDialog (provinces);
-                            dialog.show(context);
-                          });
-                        } else {
+                        // checking if a province has been selected
+                        if (model.province != '') {
                           return VirusChart.fromDailyData(
                             snapshot.data, _onSelectionChanged,
-                            selectedProvince: provinces.length > 1 ? provinces[0] : null,
+                            selectedProvince: model.province
+                          );
+                        } else {
+                          List<String> provinces = new List();
+                          for (var stat in snapshot.data) {
+                            if (!provinces.contains(stat.province))
+                              provinces.add(stat.province);
+                          }
+
+                          if (provinces.length > 1) {
+                            print("Multiple provinces detected, caution!\n$provinces");
+                            Timer(Duration(milliseconds: 1), () {
+                              var dialog = ProvinceSelectionDialog (provinces);
+                              dialog.show(context);
+                            });
+                          } else {
+                            return VirusChart.fromDailyData(
+                              snapshot.data, _onSelectionChanged,
+                              selectedProvince: provinces.length > 1 ? provinces[0] : null,
+                            );
+                          }
+
+                          return Center (
+                            child: CircularProgressIndicator(),
                           );
                         }
-
-                        return Center (
-                          child: CircularProgressIndicator(),
-                        );
                       }
                     }
                   }),
