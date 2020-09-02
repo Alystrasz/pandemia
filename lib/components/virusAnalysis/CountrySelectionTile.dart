@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
+import 'package:pandemia/utils/countrySelection/Country.dart';
 import 'package:pandemia/utils/countrySelection/Covid19ApiParser.dart';
 import 'package:provider/provider.dart';
 
@@ -62,19 +63,19 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
                 Container (
                   width: 5000,
                     padding: EdgeInsets.only(top: 100.0, bottom: 20),
-                  child: FutureBuilder<List<dynamic>>(
+                  child: FutureBuilder<List<Country>>(
                       future: _parser.getCountries(),
-                      builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+                      builder: (context, AsyncSnapshot<List<Country>> snapshot) {
                         if (!snapshot.hasData) {
                           return Center(
                             child: CircularProgressIndicator(),
                           );
                         } else {
                           List<DropdownMenuItem> _items = new List();
-                          for (dynamic c in snapshot.data) {
+                          for (Country c in snapshot.data) {
                             _items.add(DropdownMenuItem (
-                                child: Text(c['name']),
-                                value: c['identifier']
+                                child: Text(c.name),
+                                value: c.identifier
                             ));
                           }
                           return Container (

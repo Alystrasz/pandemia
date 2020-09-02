@@ -35,19 +35,19 @@ class Covid19ApiParser {
     }
 
     /// Returns a list of all selectable countries from Covid-19 API.
-    /// TODO type strongly
-    Future<List<dynamic>> getCountries () async {
+    Future<List<Country>> getCountries () async {
       await _storage.ready;
 
       if (!(await _hasDownloadedCountries())) {
         await _downloadCountries();
       }
 
-      var countries = await _storage.getItem(_countriesKey);
+      List<dynamic> countries = await _storage.getItem(_countriesKey);
       countries.sort((a, b) {
         return a['name'].toString().compareTo(b['name'].toString());
       });
-      return countries;
+
+      return countries.map((e) => Country.fromJson(e)).toList();
     }
 
 
