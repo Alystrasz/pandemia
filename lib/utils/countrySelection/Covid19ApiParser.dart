@@ -45,7 +45,18 @@ class Covid19ApiParser {
       List<Country> countries = data.map((e) => Country.fromJson(e)).toList();
 
       // removing countries listed as province under another country
-      List<String> duplicatedCountriesNames = ['French Guiana'];
+      List<String> duplicatedCountriesNames = [
+        'French Guiana',
+        'French Polynesia',
+        'Guadeloupe',
+        'Martinique',
+        'Mayotte',
+        'New Caledonia',
+        'Réunion',
+        'Saint-Barthélemy',
+        'Saint Pierre and Miquelon',
+        'Saint-Martin (French part)'
+      ];
       for (var i=0, len=countries.length; i<len; i++) {
         Country c = countries[i];
         if (duplicatedCountriesNames.contains(c.name)) {
