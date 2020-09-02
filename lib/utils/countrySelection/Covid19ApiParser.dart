@@ -38,12 +38,24 @@ class Covid19ApiParser {
         await _downloadCountries();
       }
 
-      List<dynamic> countries = await _cache.getCountryNames();
-      countries.sort((a, b) {
+      List<dynamic> data = await _cache.getCountryNames();
+      data.sort((a, b) {
         return a['name'].toString().compareTo(b['name'].toString());
       });
+      List<Country> countries = data.map((e) => Country.fromJson(e)).toList();
 
-      return countries.map((e) => Country.fromJson(e)).toList();
+      // removing countries listed as province under another country
+      List<String> duplicatedCountriesNames = ['French Guiana'];
+      for (var i=0, len=countries.length; i<len; i++) {
+        Country c = countries[i];
+        if (duplicatedCountriesNames.contains(c.name)) {
+          countries.remove(c);
+          i -= 1;
+          len -= 1;
+        }
+      }
+
+      return countries;
     }
 
 
