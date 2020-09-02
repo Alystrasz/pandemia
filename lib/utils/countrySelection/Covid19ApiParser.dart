@@ -46,16 +46,27 @@ class Covid19ApiParser {
 
       // removing countries listed as province under another country
       List<String> duplicatedCountriesNames = [
+        'Anguilla',
+        'Aruba',
+        'Bermuda',
+        'British Virgin Islands',
+        'Cayman Islands',
+        'Falkland Islands (Malvinas)',
         'French Guiana',
         'French Polynesia',
+        'Gibraltar',
+        'Greenland',
         'Guadeloupe',
+        'Isle of Man',
         'Martinique',
         'Mayotte',
+        'Montserrat',
         'New Caledonia',
         'Réunion',
         'Saint-Barthélemy',
         'Saint Pierre and Miquelon',
-        'Saint-Martin (French part)'
+        'Saint-Martin (French part)',
+        'Turks and Caicos Islands'
       ];
       for (var i=0, len=countries.length; i<len; i++) {
         Country c = countries[i];
