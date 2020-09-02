@@ -66,7 +66,9 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
                       future: _parser.getCountries(),
                       builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
                         if (!snapshot.hasData) {
-                          return CircularProgressIndicator();
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
                         } else {
                           List<DropdownMenuItem> _items = new List();
                           for (dynamic c in snapshot.data) {
