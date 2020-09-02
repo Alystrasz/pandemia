@@ -12,12 +12,31 @@ class CountryCache {
   Future<List<VirusDayData>> retrieveCountryData (String countrySlug) async {
     await _storage.ready;
     String key = "$_countriesDataPrefix$countrySlug";
-    return _storage.getItem(key);
+    List<dynamic> data = _storage.getItem(key);
+
+    // if no data is stored, return null
+    if (data == null) {
+      print('no data stored for $countrySlug');
+      return null;
+    }
+
+    VirusDayData lastDateData = VirusDayData.fromJson(data.last);
+    final now = DateTime.now();
+    int deltaT = DateTime(lastDateData.time.year, lastDateData.time.month, lastDateData.time.day)
+        .difference(DateTime(now.year, now.month, now.day)).inDays;
+
+    if (deltaT == -1) {
+      print('cached data for $countrySlug is up to date, returning it');
+      return data.map((e) => VirusDayData.fromJson(e)).toList();
+    } else {
+      print('cached data for $countrySlug is not valid, need to download it');
+      return null;
+    }
   }
 
-  storeCountryData (String countrySlug, List<VirusDayData> data) {
+  storeCountryData (String countrySlug, List<VirusDayData> data) async {
+    await _storage.ready;
     String key = "$_countriesDataPrefix$countrySlug";
     _storage.setItem(key, data);
-    print(_storage.getItem(key));
   }
 }
