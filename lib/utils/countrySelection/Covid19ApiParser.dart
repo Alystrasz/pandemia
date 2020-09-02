@@ -3,12 +3,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
 import 'package:pandemia/utils/countrySelection/Country.dart';
+import 'package:pandemia/utils/countrySelection/CountryCache.dart';
 import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 
 
 /// This class allows to access information from a Covid-19 API.
 /// https://documenter.getpostman.com/view/10808728/SzS8rjbc?version=latest
 class Covid19ApiParser {
+    final CountryCache _cache = new CountryCache();
     final LocalStorage _storage = new LocalStorage('pandemia_app.json');
     final String _countriesKey = 'countries';
 
@@ -55,6 +57,11 @@ class Covid19ApiParser {
         return null;
       }
 
+      List<VirusDayData> data = await _cache.retrieveCountryData(countrySlug);
+      if (data != null) {
+        return data;
+      }
+
       String url = "https://api.covid19api.com/dayone/country/$countrySlug";
       String encodedUrl = Uri.encodeFull(url);
       print('hitting $url');
@@ -70,9 +77,10 @@ class Covid19ApiParser {
         return new http.Response("timeout", 504);
       });
       var json = jsonDecode(response.body) as List;
-      List<VirusDayData> data = json.map((dataJson) =>
+      data = json.map((dataJson) =>
         VirusDayData.fromApi(dataJson)).toList();
 
+      _cache.storeCountryData(countrySlug, data);
       return data;
     }
 }
