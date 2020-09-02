@@ -65,6 +65,17 @@ class VirusGraphModel extends ChangeNotifier {
       this.province != null ?
         series.where((VirusDayData d) => d.province == province).toList() :
         series;
+
+    // TODO US data is sorted by town, we don't need such a little level of granularity
+    Map<String, VirusDayData> regroupedSeries = new Map();
+    for (VirusDayData data in series) {
+      String key = data.time.toIso8601String();
+      if (!regroupedSeries.containsKey(key)) {
+        regroupedSeries[key] = VirusDayData();
+      }
+      // TODO add current data to mapped data
+    }
+
     return graphSeries;
   }
 
