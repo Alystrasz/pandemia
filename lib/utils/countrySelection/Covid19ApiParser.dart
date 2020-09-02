@@ -108,6 +108,14 @@ class Covid19ApiParser {
           );
           return new http.Response("timeout", 504);
         });
+      } else {
+        Fluttertoast.showToast(
+            msg: "US data might take some time to download.",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 2,
+            fontSize: 16.0
+        );
       }
 
       var response = await request;
