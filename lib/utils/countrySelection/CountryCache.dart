@@ -14,10 +14,13 @@ class CountryCache {
     String key = "$_countriesDataPrefix$countrySlug";
     List<dynamic> data = _storage.getItem(key);
 
-    // if no data is stored, return null
+    // check if no data is stored or if API does not give data for the country
     if (data == null) {
       print('no data stored for $countrySlug');
       return null;
+    } else if (data.length == 0) {
+      print('$countrySlug has no data available from API');
+      return [];
     }
 
     VirusDayData lastDateData = VirusDayData.fromJson(data.last);
