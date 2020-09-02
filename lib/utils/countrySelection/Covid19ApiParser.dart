@@ -95,17 +95,22 @@ class Covid19ApiParser {
       String url = "https://api.covid19api.com/dayone/country/$countrySlug";
       String encodedUrl = Uri.encodeFull(url);
       print('hitting $url');
+      var request = http.get(encodedUrl);
 
-      var response = await http.get(encodedUrl).timeout(Duration(seconds: 10), onTimeout: () {
-        Fluttertoast.showToast(
-            msg: "API connection failed. Please try again later.",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 2,
-            fontSize: 16.0
-        );
-        return new http.Response("timeout", 504);
-      });
+      if (countrySlug != 'united-states') {
+        request.timeout(Duration(seconds: 10), onTimeout: () {
+          Fluttertoast.showToast(
+              msg: "API connection failed. Please try again later.",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 2,
+              fontSize: 16.0
+          );
+          return new http.Response("timeout", 504);
+        });
+      }
+
+      var response = await request;
       var json = jsonDecode(response.body) as List;
       data = json.map((dataJson) =>
         VirusDayData.fromApi(dataJson)).toList();
