@@ -26,4 +26,22 @@ class VirusDayData {
         "deathCases: $deathCases, recoveredCases: $recoveredCases, "
         "activeCases: $activeCases)";
   }
+
+  factory VirusDayData.fromJson(Map<String, dynamic> json) => VirusDayData(
+    time: DateTime.parse(json['time'] as String),
+    province: json['province'] as String,
+    confirmedCases: json['confirmedCases'] as int,
+    deathCases: json['deathCases'] as int,
+    recoveredCases: json['recoveredCases'] as int,
+    activeCases: json['activeCases'] as int
+  );
+
+  Map<String, dynamic> toJson() => {
+    'time': time.toIso8601String(),
+    'province': province,
+    'confirmedCases': confirmedCases,
+    'deathCases': deathCases,
+    'recoveredCases': recoveredCases,
+    'activeCases': activeCases
+  };
 }
