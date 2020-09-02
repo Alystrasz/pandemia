@@ -7,6 +7,8 @@ import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 class VirusGraphModel extends ChangeNotifier {
   String selectedCountry = "";
   String province = "";
+  static final defaultCountry = 'france';
+  static final defaultProvince = '';
 
   final LocalStorage _storage = new LocalStorage('pandemia_app.json');
   final String _selectedCountryKey = "fav-country";
@@ -51,6 +53,12 @@ class VirusGraphModel extends ChangeNotifier {
   /// Returns data for the current saved country+province.
   /// Is called each time a country is selected by the user.
   Future<List<VirusDayData>> update () async {
+    // load default values at first start
+    if (this.selectedCountry == null) {
+      this.selectedCountry = defaultCountry;
+      this.province = defaultProvince;
+    }
+
     List<VirusDayData> series = _data != null ? _data : await parser.getCountryData(this.selectedCountry);
     _data = null;
     List<VirusDayData> graphSeries =

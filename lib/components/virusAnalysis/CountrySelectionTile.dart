@@ -112,7 +112,7 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
   void _loadFavoriteCountry () async {
     String result = await Provider.of<VirusGraphModel>(context, listen: false).init();
     setState(() {
-      _value =  result == null ? 'united-kingdom' : result;
+      _value =  result == null ? VirusGraphModel.defaultCountry : result;
     });
   }
 }
