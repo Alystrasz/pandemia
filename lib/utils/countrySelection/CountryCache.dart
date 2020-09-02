@@ -1,11 +1,30 @@
 import 'package:localstorage/localstorage.dart';
+import 'package:pandemia/utils/countrySelection/Country.dart';
 import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 
 /// Stores country data in a json file locally.
-/// TODO transfer countries names handling here
 class CountryCache {
   final LocalStorage _storage = new LocalStorage('pandemia_app.json');
   final String _countriesDataPrefix = 'country_data_';
+  final String _countriesKey = 'countries';
+
+
+  // names handling
+  Future<bool> hasDownloadedCountryNames () async {
+    await _storage.ready;
+    var countries = await _storage.getItem(_countriesKey);
+    return countries != null;
+  }
+
+  void storeCountryNames (List<Country> countries) {
+    _storage.setItem(_countriesKey, countries);
+    print(countries.length.toString() + ' countries stored');
+  }
+
+  Future<List<dynamic>> getCountryNames () async {
+    return await _storage.getItem(_countriesKey);
+  }
+
 
   // returns stored data if it's up to date (= if yesterday is the last day
   // present in data)

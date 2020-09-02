@@ -12,12 +12,10 @@ import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 class Covid19ApiParser {
     final CountryCache _cache = new CountryCache();
     final LocalStorage _storage = new LocalStorage('pandemia_app.json');
-    final String _countriesKey = 'countries';
 
     /// Are countries locally stored or not?
     Future<bool> _hasDownloadedCountries () async {
-      var countries = await _storage.getItem(_countriesKey);
-      return countries != null;
+      return await _cache.hasDownloadedCountryNames();
     }
 
     /// Download all available countries and stores them locally.
@@ -29,9 +27,7 @@ class Covid19ApiParser {
       var json = jsonDecode(response.body) as List;
       List<Country> countries = json.map((tagJson) =>
           Country.fromApi(tagJson)).toList();
-
-      print(countries.length.toString() + ' countries stored');
-      _storage.setItem(_countriesKey, countries);
+      _cache.storeCountryNames(countries);
     }
 
     /// Returns a list of all selectable countries from Covid-19 API.
@@ -42,7 +38,7 @@ class Covid19ApiParser {
         await _downloadCountries();
       }
 
-      List<dynamic> countries = await _storage.getItem(_countriesKey);
+      List<dynamic> countries = await _cache.getCountryNames();
       countries.sort((a, b) {
         return a['name'].toString().compareTo(b['name'].toString());
       });
