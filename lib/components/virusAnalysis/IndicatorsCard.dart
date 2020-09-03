@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
+import 'package:provider/provider.dart';
 
 class IndicatorsCard extends StatelessWidget {
   @override
@@ -38,6 +40,20 @@ class IndicatorsCard extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 35.0, horizontal: 10.0)
                 ),
 
+                Consumer<VirusGraphModel>(
+                  builder: (context, model, child) {
+                    return Container(
+                        child: new Text(
+                          "${model.currentData.last.activeCases} active cases now",
+                          style: TextStyle(
+                              color: CustomPalette.text[100],
+                              fontSize: 20,
+                          ),
+                        ),
+                        padding: EdgeInsets.only(top: 70, left: 10.0, bottom: 10)
+                    );
+                  }
+                )
               ],
             ),
           ),
