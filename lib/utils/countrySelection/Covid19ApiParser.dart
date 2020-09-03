@@ -93,8 +93,9 @@ class Covid19ApiParser {
 
       // load default values at first start
       if (countrySlug == null) {
-        countrySlug = VirusGraphModel.defaultCountry;
-        province = VirusGraphModel.defaultProvince;
+        Provider.of<VirusGraphModel>(context).setSelectedCountry(VirusGraphModel.defaultCountry, context);
+        Provider.of<VirusGraphModel>(context).setProvince(VirusGraphModel.defaultProvince, false);
+        return VirusGraphModel.parser.getCountryData(context);
       }
 
       if (countrySlug == '') {

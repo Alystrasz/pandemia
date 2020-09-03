@@ -17,7 +17,7 @@ class ProvinceSelectionDialog {
       children: provinces.map((String p) => ListTile(
         title: Text(p == '' ? "Home country" : p, style: TextStyle(color: CustomPalette.text[400])),
         onTap: () {
-          Provider.of<VirusGraphModel>(_context).setProvince(p, _data);
+          Provider.of<VirusGraphModel>(_context).setProvince(p, true);
           Navigator.pop(_context);
         },
       )).toList()

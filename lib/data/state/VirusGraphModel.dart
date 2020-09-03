@@ -27,10 +27,11 @@ class VirusGraphModel extends ChangeNotifier {
     parser.getCountryData(context);
   }
 
-  setProvince (String value, List<VirusDayData> countryData) {
+  setProvince (String value, bool shouldNotifyListeners) {
     this.province = value;
     _storage.setItem(_selectedProvinceKey, value);
-    notifyListeners();
+    if (shouldNotifyListeners)
+      notifyListeners();
   }
 
   startParsing () {
