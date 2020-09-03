@@ -90,6 +90,7 @@ class Covid19ApiParser {
       String countrySlug = model.selectedCountry;
       String province = model.province;
 
+      // load default values at first start
       if (countrySlug == null) {
         countrySlug = VirusGraphModel.defaultCountry;
         province = VirusGraphModel.defaultProvince;
@@ -99,6 +100,7 @@ class Covid19ApiParser {
         return null;
       }
 
+      // checking if cache has valid data
       List<VirusDayData> data = await _cache.retrieveCountryData(countrySlug);
       if (data != null) {
         Provider.of<VirusGraphModel>(context).setData(data);
@@ -138,6 +140,7 @@ class Covid19ApiParser {
       data = json.map((dataJson) =>
         VirusDayData.fromApi(dataJson)).toList();
 
+      // filter data by province if needed
       List<VirusDayData> graphSeries =
         province != null ?
         data.where((VirusDayData d) => d.province == province).toList() :
