@@ -40,6 +40,7 @@ class CountryVirusProgressCard extends StatelessWidget {
         return Container (
           height: 300,
           color: CustomPalette.background[600],
+          margin: EdgeInsets.only(bottom: 10),
           child: Stack (
             children: <Widget>[
               Container (
