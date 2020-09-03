@@ -43,14 +43,17 @@ class IndicatorsCard extends StatelessWidget {
                 Consumer<VirusGraphModel>(
                   builder: (context, model, child) {
                     return Container(
-                        child: new Text(
+                      margin: EdgeInsets.only(top: 70, left: 10),
+                        child: model.isParsingData ? Center (
+                          child: CircularProgressIndicator(),
+                        ) : new Text(
                           "${model.currentData.last.activeCases} active cases now",
                           style: TextStyle(
                               color: CustomPalette.text[100],
                               fontSize: 20,
                           ),
                         ),
-                        padding: EdgeInsets.only(top: 70, left: 10.0, bottom: 10)
+                        padding: EdgeInsets.only(bottom: 20)
                     );
                   }
                 )
