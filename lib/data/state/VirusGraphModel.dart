@@ -14,19 +14,20 @@ class VirusGraphModel extends ChangeNotifier {
   final String _selectedCountryKey = "fav-country";
   final String _selectedProvinceKey = "fav-province";
 
-  Covid19ApiParser parser = new Covid19ApiParser();
+  static final Covid19ApiParser parser = new Covid19ApiParser();
+  bool isParsingData = true;
   List<VirusDayData> currentData;
   // This field is used when a country have several provinces, to avoid doing
   // an additional http call to filter data.
   List<VirusDayData> _data;
   
 
-  setSelectedCountry (String value) {
+  setSelectedCountry (String value, BuildContext context) {
     this.selectedCountry = value;
     this.province = null;
     _storage.setItem(_selectedCountryKey, value);
     _storage.setItem(_selectedProvinceKey, null);
-    notifyListeners();
+    parser.getCountryData(context);
   }
 
   setProvince (String value, List<VirusDayData> countryData) {
@@ -37,7 +38,19 @@ class VirusGraphModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String> init () async {
+  startParsing () {
+    this.isParsingData = true;
+    this.currentData = null;
+    notifyListeners();
+  }
+
+  setData (List<VirusDayData> data) {
+    this.isParsingData = false;
+    this.currentData = data;
+    notifyListeners();
+  }
+
+  Future<String> init (BuildContext context) async {
     await _storage.ready;
     String result = _storage.getItem(_selectedCountryKey);
     String province = _storage.getItem(_selectedProvinceKey);
@@ -48,9 +61,11 @@ class VirusGraphModel extends ChangeNotifier {
     this.province = province;
     notifyListeners();
 
+    parser.getCountryData(context);
     return result;
   }
 
+  /*
   /// Returns data for the current saved country+province.
   /// Is called each time a country is selected by the user.
   Future<List<VirusDayData>> update () async {
@@ -66,7 +81,6 @@ class VirusGraphModel extends ChangeNotifier {
       this.province != null ?
         series.where((VirusDayData d) => d.province == province).toList() :
         series;
-/*
     List<String> cities = new List();
     for (var data in series) {
       if (!cities.contains(data.city)) {
@@ -89,13 +103,14 @@ class VirusGraphModel extends ChangeNotifier {
       }
       print(regroupedSeries.values.length);
       return regroupedSeries.values;
-    }*/
+    }
 
     this.currentData = graphSeries;
     return graphSeries;
-  }
+  }*/
 
   String toString () {
-    return "VirusGraphModel {selectedCountry: $selectedCountry, province: $province}";
+    return "VirusGraphModel "
+        "{selectedCountry: $selectedCountry, province: $province, isParsing: $isParsingData}";
   }
 }

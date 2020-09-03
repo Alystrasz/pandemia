@@ -34,9 +34,9 @@ class CountryVirusProgressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return new Consumer<VirusGraphModel>(
       builder: (context, model, child) {
-
         return Container (
           height: 300,
           color: CustomPalette.background[600],
@@ -44,18 +44,16 @@ class CountryVirusProgressCard extends StatelessWidget {
           child: Stack (
             children: <Widget>[
               Container (
-                child: FutureBuilder<List<VirusDayData>>(
-                  future: Provider.of<VirusGraphModel>(context, listen: true)
-                      .update(),
-                  builder: (context, AsyncSnapshot<List<VirusDayData>> snapshot) {
+                child: Builder (
+                  builder: (context) {
                     print(model);
 
-                    if (!snapshot.hasData || model.selectedCountry == '') {
+                    if (model.isParsingData || model.selectedCountry == '') {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
                     } else {
-                      if (snapshot.data.length == 0) {
+                      if (model.currentData.length == 0) {
                         return Container (
                           child: Center (
                             child: Text (
@@ -72,12 +70,12 @@ class CountryVirusProgressCard extends StatelessWidget {
                         // checking if a province has been selected
                         if (model.province != null) {
                           return VirusChart.fromDailyData(
-                            snapshot.data, _onSelectionChanged,
+                            model.currentData, _onSelectionChanged,
                             selectedProvince: model.province
                           );
                         } else {
                           List<String> provinces = new List();
-                          for (var stat in snapshot.data) {
+                          for (var stat in model.currentData) {
                             if (!provinces.contains(stat.province))
                               provinces.add(stat.province);
                           }
@@ -86,11 +84,11 @@ class CountryVirusProgressCard extends StatelessWidget {
                             print("multiple provinces detected");
                             Timer(Duration(milliseconds: 1), () {
                               var dialog = ProvinceSelectionDialog (provinces);
-                              dialog.show(context, snapshot.data);
+                              dialog.show(context, model.currentData);
                             });
                           } else {
                             return VirusChart.fromDailyData(
-                              snapshot.data, _onSelectionChanged,
+                              model.currentData, _onSelectionChanged,
                               selectedProvince: provinces.length > 1 ? provinces[0] : null,
                             );
                           }

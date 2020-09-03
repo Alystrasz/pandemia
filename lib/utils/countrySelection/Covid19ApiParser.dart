@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
+import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/countrySelection/Country.dart';
 import 'package:pandemia/utils/countrySelection/CountryCache.dart';
 import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
+import 'package:provider/provider.dart';
 
 
 /// This class allows to access information from a Covid-19 API.
@@ -82,7 +85,16 @@ class Covid19ApiParser {
 
 
     /// Returns pandemia details for a given country.
-    Future<List<VirusDayData>> getCountryData (String countrySlug) async {
+    Future<List<VirusDayData>> getCountryData (BuildContext context) async {
+      VirusGraphModel model = Provider.of<VirusGraphModel>(context);
+      String countrySlug = model.selectedCountry;
+      String province = model.province;
+
+      if (countrySlug == null) {
+        countrySlug = VirusGraphModel.defaultCountry;
+        province = VirusGraphModel.defaultProvince;
+      }
+
       if (countrySlug == '') {
         return null;
       }
@@ -91,6 +103,8 @@ class Covid19ApiParser {
       if (data != null) {
         return data;
       }
+
+      Provider.of<VirusGraphModel>(context).startParsing();
 
       String url = "https://api.covid19api.com/dayone/country/$countrySlug";
       String encodedUrl = Uri.encodeFull(url);
@@ -123,7 +137,13 @@ class Covid19ApiParser {
       data = json.map((dataJson) =>
         VirusDayData.fromApi(dataJson)).toList();
 
+      List<VirusDayData> graphSeries =
+        province != null ?
+        data.where((VirusDayData d) => d.province == province).toList() :
+        data;
+
       _cache.storeCountryData(countrySlug, data);
-      return data;
+      Provider.of<VirusGraphModel>(context).setData(data);
+      return graphSeries;
     }
 }
