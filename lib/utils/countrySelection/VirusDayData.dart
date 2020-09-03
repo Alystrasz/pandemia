@@ -2,10 +2,10 @@ class VirusDayData {
   final DateTime time;
   final String province;
 
-  final int confirmedCases;
-  final int deathCases;
-  final int recoveredCases;
-  final int activeCases;
+  int confirmedCases;
+  int deathCases;
+  int recoveredCases;
+  int activeCases;
 
   VirusDayData({this.time, this.province, this.confirmedCases, this.deathCases,
       this.recoveredCases, this.activeCases});
@@ -44,4 +44,11 @@ class VirusDayData {
     'recoveredCases': recoveredCases,
     'activeCases': activeCases
   };
+
+  void sumData (VirusDayData data) {
+    this.confirmedCases += data.confirmedCases;
+    this.deathCases += data.confirmedCases;
+    this.recoveredCases += data.recoveredCases;
+    this.activeCases += data.activeCases;
+  }
 }
