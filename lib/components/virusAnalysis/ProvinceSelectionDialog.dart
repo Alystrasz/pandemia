@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 class ProvinceSelectionDialog {
   SimpleDialog _dialog;
   BuildContext _context;
-  List<VirusDayData> _data;
 
   ProvinceSelectionDialog (List<String> provinces) {
      provinces.sort((a, b) => a.compareTo(b));
@@ -26,7 +25,6 @@ class ProvinceSelectionDialog {
 
   void show (BuildContext context, List<VirusDayData> data) {
     this._context = context;
-    this._data = data;
 
     showDialog(
       context: context,
