@@ -87,6 +87,7 @@ class Covid19ApiParser {
     /// Returns pandemia details for a given country.
     Future<List<VirusDayData>> getCountryData (BuildContext context) async {
       VirusGraphModel model = Provider.of<VirusGraphModel>(context);
+      Provider.of<VirusGraphModel>(context).startParsing();
       String countrySlug = model.selectedCountry;
       String province = model.province;
 
@@ -106,8 +107,6 @@ class Covid19ApiParser {
         Provider.of<VirusGraphModel>(context).setData(data);
         return data;
       }
-
-      Provider.of<VirusGraphModel>(context).startParsing();
 
       String url = "https://api.covid19api.com/dayone/country/$countrySlug";
       String encodedUrl = Uri.encodeFull(url);
