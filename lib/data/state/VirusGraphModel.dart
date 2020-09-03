@@ -15,6 +15,7 @@ class VirusGraphModel extends ChangeNotifier {
   final String _selectedProvinceKey = "fav-province";
 
   Covid19ApiParser parser = new Covid19ApiParser();
+  List<VirusDayData> currentData;
   // This field is used when a country have several provinces, to avoid doing
   // an additional http call to filter data.
   List<VirusDayData> _data;
@@ -90,6 +91,7 @@ class VirusGraphModel extends ChangeNotifier {
       return regroupedSeries.values;
     }*/
 
+    this.currentData = graphSeries;
     return graphSeries;
   }
 
