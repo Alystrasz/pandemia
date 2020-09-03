@@ -66,6 +66,16 @@ class VirusGraphModel extends ChangeNotifier {
         series.where((VirusDayData d) => d.province == province).toList() :
         series;
 
+    List<String> cities = new List();
+    for (var data in series) {
+      if (!cities.contains(data.city)) {
+        cities.add(data.city);
+      }
+    }
+    if (cities.length > 1) {
+      print('several cities present in dataset, need to be sorted');
+    }
+
     // TODO US data is sorted by town, we don't need such a little level of granularity
     Map<String, VirusDayData> regroupedSeries = new Map();
     for (VirusDayData data in series) {
