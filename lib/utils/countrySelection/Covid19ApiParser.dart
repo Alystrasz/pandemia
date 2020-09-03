@@ -101,6 +101,7 @@ class Covid19ApiParser {
 
       List<VirusDayData> data = await _cache.retrieveCountryData(countrySlug);
       if (data != null) {
+        Provider.of<VirusGraphModel>(context).setData(data);
         return data;
       }
 
