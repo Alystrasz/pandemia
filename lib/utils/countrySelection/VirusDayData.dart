@@ -1,19 +1,21 @@
 class VirusDayData {
   final DateTime time;
   final String province;
+  final String city;
 
   int confirmedCases;
   int deathCases;
   int recoveredCases;
   int activeCases;
 
-  VirusDayData({this.time, this.province, this.confirmedCases, this.deathCases,
-      this.recoveredCases, this.activeCases});
+  VirusDayData({this.time, this.province, this.city,
+    this.confirmedCases, this.deathCases, this.recoveredCases, this.activeCases});
   
   factory VirusDayData.fromApi (dynamic data) {
     return new VirusDayData(
       time: DateTime.parse(data['Date']),
       province: data['Province'] as String,
+      city: data['City'] as String,
       confirmedCases: data['Confirmed'] as int,
       deathCases: data['Deaths'] as int,
       recoveredCases: data['Recovered'] as int,
@@ -22,7 +24,7 @@ class VirusDayData {
   }
 
   String toString () {
-    return "VirusDayData (province: $province, time: $time, confirmedCases: $confirmedCases, "
+    return "VirusDayData (province: $province, city: $city, time: $time, confirmedCases: $confirmedCases, "
         "deathCases: $deathCases, recoveredCases: $recoveredCases, "
         "activeCases: $activeCases)";
   }
@@ -30,6 +32,7 @@ class VirusDayData {
   factory VirusDayData.fromJson(Map<String, dynamic> json) => VirusDayData(
     time: DateTime.parse(json['time'] as String),
     province: json['province'] as String,
+    city: json['city'] as String,
     confirmedCases: json['confirmedCases'] as int,
     deathCases: json['deathCases'] as int,
     recoveredCases: json['recoveredCases'] as int,
@@ -39,6 +42,7 @@ class VirusDayData {
   Map<String, dynamic> toJson() => {
     'time': time.toIso8601String(),
     'province': province,
+    'city': city,
     'confirmedCases': confirmedCases,
     'deathCases': deathCases,
     'recoveredCases': recoveredCases,
