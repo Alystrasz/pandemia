@@ -17,9 +17,6 @@ class VirusGraphModel extends ChangeNotifier {
   static final Covid19ApiParser parser = new Covid19ApiParser();
   bool isParsingData = true;
   List<VirusDayData> currentData;
-  // This field is used when a country have several provinces, to avoid doing
-  // an additional http call to filter data.
-  List<VirusDayData> _data;
   
 
   setSelectedCountry (String value, BuildContext context) {
@@ -32,8 +29,6 @@ class VirusGraphModel extends ChangeNotifier {
 
   setProvince (String value, List<VirusDayData> countryData) {
     this.province = value;
-    this._data = countryData;
-
     _storage.setItem(_selectedProvinceKey, value);
     notifyListeners();
   }
@@ -64,50 +59,6 @@ class VirusGraphModel extends ChangeNotifier {
     parser.getCountryData(context);
     return result;
   }
-
-  /*
-  /// Returns data for the current saved country+province.
-  /// Is called each time a country is selected by the user.
-  Future<List<VirusDayData>> update () async {
-    // load default values at first start
-    if (this.selectedCountry == null) {
-      this.selectedCountry = defaultCountry;
-      this.province = defaultProvince;
-    }
-
-    List<VirusDayData> series = _data != null ? _data : await parser.getCountryData(this.selectedCountry);
-    _data = null;
-    List<VirusDayData> graphSeries =
-      this.province != null ?
-        series.where((VirusDayData d) => d.province == province).toList() :
-        series;
-    List<String> cities = new List();
-    for (var data in series) {
-      if (!cities.contains(data.city)) {
-        cities.add(data.city);
-      }
-    }
-    if (cities.length > 1 && this.province != null) {
-      print('several cities present in dataset, need to be sorted');
-      Map<String, VirusDayData> regroupedSeries = new Map();
-      print(series.length);
-      var i=0;
-      for (VirusDayData data in series) {
-        String key = data.time.toIso8601String();
-        if (!regroupedSeries.containsKey(key)) {
-          regroupedSeries.putIfAbsent(key, () => data);
-        }
-        regroupedSeries[key].sumData(data);
-        print(i);
-        i++;
-      }
-      print(regroupedSeries.values.length);
-      return regroupedSeries.values;
-    }
-
-    this.currentData = graphSeries;
-    return graphSeries;
-  }*/
 
   String toString () {
     return "VirusGraphModel "
