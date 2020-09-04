@@ -89,7 +89,6 @@ class Covid19ApiParser {
       VirusGraphModel model = Provider.of<VirusGraphModel>(context);
       Provider.of<VirusGraphModel>(context).startParsing();
       String countrySlug = model.selectedCountry;
-      String province = model.province;
 
       // load default values at first start
       if (countrySlug == null) {
