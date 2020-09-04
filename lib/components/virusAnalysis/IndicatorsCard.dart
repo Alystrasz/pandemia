@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
+import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 import 'package:provider/provider.dart';
 
 class IndicatorsCard extends StatelessWidget {
@@ -57,7 +58,21 @@ class IndicatorsCard extends StatelessWidget {
                               ),
                             ),
                             padding: EdgeInsets.only(bottom: 20)
-                        )
+                        ),
+
+                        Container(
+                            margin: EdgeInsets.only(top: 95, left: 10),
+                            child: model.isParsingData ? Center (
+                              child: CircularProgressIndicator(),
+                            ) : new Text(
+                              "Active cases progression: ${getActiveCasesProgressionRate(model.currentData)}",
+                              style: TextStyle(
+                                color: CustomPalette.text[100],
+                                fontSize: 20,
+                              ),
+                            ),
+                            padding: EdgeInsets.only(bottom: 20)
+                        ),
                       ],
                     ),
                   ),
@@ -67,5 +82,12 @@ class IndicatorsCard extends StatelessWidget {
           }
         }
     );
+  }
+
+  /// Computes active cases progression rate with data from 5 days ago.
+  String getActiveCasesProgressionRate (List<VirusDayData> data) {
+    VirusDayData last = data.last;
+    VirusDayData previous = data[data.length-6];
+    return (last.activeCases/previous.activeCases).toStringAsFixed(4);
   }
 }
