@@ -30,6 +30,12 @@ class VirusGraphModel extends ChangeNotifier {
   setProvince (String value, bool shouldNotifyListeners) {
     this.province = value;
     _storage.setItem(_selectedProvinceKey, value);
+
+    // filter current data
+    currentData = province != null ?
+      currentData.where((VirusDayData d) => d.province == province).toList() :
+      currentData;
+
     if (shouldNotifyListeners)
       notifyListeners();
   }
