@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:pandemia/data/database/database.dart';
 import 'package:pandemia/data/database/models/DailyReport.dart';
 import 'package:pandemia/data/state/AppModel.dart';
+import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:provider/provider.dart';
 var database = new AppDatabase();
 
@@ -19,20 +21,24 @@ class IndicatorsComputer {
     print('generating report');
 
     // TODO rates computing
-    await new Future.delayed(const Duration(milliseconds: 750), () {});
+    await new Future.delayed(const Duration(milliseconds: 0), () async {
+      var data = await Provider.of<VirusGraphModel>(context).silentInit(context);
+      print(data);
+    }).then((value) async {
 
-    var report = new DailyReport(
-        timestamp: DailyReport.getTodaysTimestamp(),
-        broadcastRate: new Random().nextInt(100),
-        expositionRate: new Random().nextInt(100)
-    );
-    await setTodaysReport(report);
+      var report = new DailyReport(
+          timestamp: DailyReport.getTodaysTimestamp(),
+          broadcastRate: new Random().nextInt(100),
+          expositionRate: new Random().nextInt(100)
+      );
+      await setTodaysReport(report);
 
-    // putting all reports in app model, to share them among other components
-    List<DailyReport> reports = await database.getReports();
-    Provider.of<AppModel>(context, listen: false).storeReports(reports);
+      // putting all reports in app model, to share them among other components
+      List<DailyReport> reports = await database.getReports();
+      Provider.of<AppModel>(context, listen: false).storeReports(reports);
 
-    generated = true;
+      generated = true;
+    });
   }
 
   Future<void> forceReportRecomputing (BuildContext context) async {
