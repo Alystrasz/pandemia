@@ -94,7 +94,7 @@ class Covid19ApiParser {
       // load default values at first start
       if (countrySlug == null) {
         Provider.of<VirusGraphModel>(context).setSelectedCountry(VirusGraphModel.defaultCountry, context);
-        Provider.of<VirusGraphModel>(context).setProvince(VirusGraphModel.defaultProvince, false);
+        Provider.of<VirusGraphModel>(context).setProvince(VirusGraphModel.defaultProvince, true);
         return VirusGraphModel.parser.getCountryData(context);
       }
 
@@ -140,14 +140,8 @@ class Covid19ApiParser {
       data = json.map((dataJson) =>
         VirusDayData.fromApi(dataJson)).toList();
 
-      // filter data by province if needed
-      List<VirusDayData> graphSeries =
-        province != null ?
-        data.where((VirusDayData d) => d.province == province).toList() :
-        data;
-
       _cache.storeCountryData(countrySlug, data);
       Provider.of<VirusGraphModel>(context).setData(data);
-      return graphSeries;
+      return data;
     }
 }

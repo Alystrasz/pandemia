@@ -16,7 +16,7 @@ class VirusGraphModel extends ChangeNotifier {
 
   static final Covid19ApiParser parser = new Covid19ApiParser();
   bool isParsingData = true;
-  List<VirusDayData> currentData;
+  List<VirusDayData> currentData = List();
   
 
   setSelectedCountry (String value, BuildContext context) {
@@ -49,6 +49,12 @@ class VirusGraphModel extends ChangeNotifier {
   setData (List<VirusDayData> data) {
     this.isParsingData = false;
     this.currentData = data;
+
+    // filter current data
+    this.currentData = province != null ?
+      currentData.where((VirusDayData d) => d.province == province).toList() :
+      currentData;
+
     notifyListeners();
   }
 
