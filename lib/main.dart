@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:pandemia/data/database/indicatorsComputer.dart';
 import 'package:pandemia/navigator.dart';
 import 'package:pandemia/views/VirusAnalyzeView.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting();
+    new IndicatorsComputer().generateRandomReport(context);
 
     return MaterialApp(
       title: 'Pandemia',

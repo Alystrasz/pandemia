@@ -17,7 +17,7 @@ class HomeView extends StatelessWidget {
   HomeView();
   final IndicatorsComputer computer = new IndicatorsComputer();
   final RefreshController _refreshController =
-  RefreshController(initialRefresh: false);
+    RefreshController(initialRefresh: false);
 
   void _onRefresh(context) async{
     await computer.forceReportRecomputing(context);
@@ -31,8 +31,6 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // launching analysis
-    computer.generateRandomReport(context);
     InformationSheet sheet = new InformationSheet(context);
 
     return SafeArea (
