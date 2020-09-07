@@ -6,6 +6,7 @@ import 'package:pandemia/utils/charts/activeCasesChart.dart';
 import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 import 'package:provider/provider.dart';
 
+/// This component displays pandemic statistics about the selected country.
 class IndicatorsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -113,6 +114,8 @@ class IndicatorsCard extends StatelessWidget {
     );
   }
 
+  /// Returns a rate showcasing pandemic evolution by comparing latest number
+  /// of active cases, and same statistics 6 days before.
   double getActiveCasesProgressionRate (Map<DateTime, int> data) {
     List<DateTime> keys = data.keys.toList();
     int index = keys.length-1;
@@ -126,6 +129,9 @@ class IndicatorsCard extends StatelessWidget {
     return lastComputedAverage/previousComputedAverage;
   }
 
+  /// Computes active cases moving averages (https://en.wikipedia.org/wiki/Moving_average)
+  /// with 11-day-long window, to filter out periodic fluctuations and highlight
+  /// general direction of values.
   Map<DateTime, int> computeActiveCasesMobileAverage (List<VirusDayData> series) {
     Map<DateTime, int> values = new Map();
     int windowSize = 11;
