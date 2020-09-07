@@ -16,6 +16,7 @@ class IndicatorsCard extends StatelessWidget {
           } else {
             Map<DateTime, int> activeCasesProgression =
               computeActiveCasesMobileAverage(model.currentData);
+            double rate = getActiveCasesProgressionRate(activeCasesProgression);
 
             return Container (
               margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
@@ -69,7 +70,21 @@ class IndicatorsCard extends StatelessWidget {
                             child: model.isParsingData ? Center (
                               child: CircularProgressIndicator(),
                             ) : new Text(
-                              "Active cases progression: ${getActiveCasesProgressionRate(activeCasesProgression)}",
+                              "Active cases progression: ${rate.toStringAsFixed(3)}",
+                              style: TextStyle(
+                                color: CustomPalette.text[100],
+                                fontSize: 20,
+                              ),
+                            ),
+                            padding: EdgeInsets.only(bottom: 20)
+                        ),
+
+                        Container(
+                            margin: EdgeInsets.only(top: 118, left: 10),
+                            child: model.isParsingData ? Center (
+                              child: CircularProgressIndicator(),
+                            ) : new Text(
+                              rate > 1 ? "Pandemic is progressing" : "Pandemic is regressing",
                               style: TextStyle(
                                 color: CustomPalette.text[100],
                                 fontSize: 20,
@@ -79,7 +94,7 @@ class IndicatorsCard extends StatelessWidget {
                         ),
 
                         Container (
-                          margin: EdgeInsets.only(top: 120, left: 10),
+                          margin: EdgeInsets.only(top: 150, left: 10),
                           padding: EdgeInsets.only(bottom: 10),
                           height: 200,
                           child: ActiveCasesChart.fromValues(
@@ -97,7 +112,7 @@ class IndicatorsCard extends StatelessWidget {
     );
   }
 
-  String getActiveCasesProgressionRate (Map<DateTime, int> data) {
+  double getActiveCasesProgressionRate (Map<DateTime, int> data) {
     List<DateTime> keys = data.keys.toList();
     int index = keys.length-1;
 
@@ -107,7 +122,7 @@ class IndicatorsCard extends StatelessWidget {
 
     int lastComputedAverage = data[keys[index]];
     int previousComputedAverage = data[keys[index-6]];
-    return (lastComputedAverage/previousComputedAverage).toStringAsFixed(4);
+    return lastComputedAverage/previousComputedAverage;
   }
 
   Map<DateTime, int> computeActiveCasesMobileAverage (List<VirusDayData> series) {
