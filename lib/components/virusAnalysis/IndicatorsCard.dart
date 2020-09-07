@@ -51,54 +51,55 @@ class IndicatorsCard extends StatelessWidget {
                             padding: EdgeInsets.symmetric(vertical: 35.0, horizontal: 10.0)
                         ),
 
-                        Container(
-                            margin: EdgeInsets.only(top: 70, left: 10),
-                            child: model.isParsingData ? Center (
-                              child: CircularProgressIndicator(),
-                            ) : new Text(
-                              "${model.currentData.last.activeCases} active cases now",
-                              style: TextStyle(
-                                color: CustomPalette.text[100],
-                                fontSize: 20,
-                              ),
-                            ),
-                            padding: EdgeInsets.only(bottom: 20)
-                        ),
-
-                        Container(
-                            margin: EdgeInsets.only(top: 95, left: 10),
-                            child: model.isParsingData ? Center (
-                              child: CircularProgressIndicator(),
-                            ) : new Text(
-                              "Active cases progression: ${rate.toStringAsFixed(3)}",
-                              style: TextStyle(
-                                color: CustomPalette.text[100],
-                                fontSize: 20,
-                              ),
-                            ),
-                            padding: EdgeInsets.only(bottom: 20)
-                        ),
-
-                        Container(
-                            margin: EdgeInsets.only(top: 118, left: 10),
-                            child: model.isParsingData ? Center (
-                              child: CircularProgressIndicator(),
-                            ) : new Text(
-                              rate > 1 ? "Pandemic is progressing" : "Pandemic is regressing",
-                              style: TextStyle(
-                                color: CustomPalette.text[100],
-                                fontSize: 20,
-                              ),
-                            ),
-                            padding: EdgeInsets.only(bottom: 20)
-                        ),
-
                         Container (
-                          margin: EdgeInsets.only(top: 150, left: 10),
-                          padding: EdgeInsets.only(bottom: 10),
-                          height: 200,
-                          child: ActiveCasesChart.fromValues(
-                              activeCasesProgression
+                          margin: EdgeInsets.only(top: 70, left: 10),
+                          child: Stack (
+                            children: <Widget>[
+                              Container(
+                                  margin: EdgeInsets.only(top: 0),
+                                  child: Text(
+                                    "${model.currentData.last.activeCases} active cases now",
+                                    style: TextStyle(
+                                      color: CustomPalette.text[100],
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  padding: EdgeInsets.only(bottom: 20)
+                              ),
+
+                              Container(
+                                  margin: EdgeInsets.only(top: 25),
+                                  child: Text(
+                                    "Active cases progression: ${rate.toStringAsFixed(3)}",
+                                    style: TextStyle(
+                                      color: CustomPalette.text[100],
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  padding: EdgeInsets.only(bottom: 20)
+                              ),
+
+                              Container(
+                                  margin: EdgeInsets.only(top: 48),
+                                  child: Text(
+                                    rate > 1 ? "Pandemic is progressing" : "Pandemic is regressing",
+                                    style: TextStyle(
+                                      color: CustomPalette.text[100],
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  padding: EdgeInsets.only(bottom: 20)
+                              ),
+
+                              Container (
+                                margin: EdgeInsets.only(top: 80),
+                                padding: EdgeInsets.only(bottom: 10),
+                                height: 200,
+                                child: ActiveCasesChart.fromValues(
+                                    activeCasesProgression
+                                ),
+                              )
+                            ],
                           ),
                         )
                       ],
