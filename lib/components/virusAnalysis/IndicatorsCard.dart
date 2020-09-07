@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pandemia/data/state/VirusGraphModel.dart';
@@ -65,7 +67,8 @@ class IndicatorsCard extends StatelessWidget {
                             child: model.isParsingData ? Center (
                               child: CircularProgressIndicator(),
                             ) : new Text(
-                              "Active cases progression: ${getActiveCasesProgressionRate(model.currentData)}",
+                              "Active cases progression: ${getActiveCasesProgressionRate(model.currentData)}"
+                                  "${computeActiveCasesMobileAverage(model.currentData)}",
                               style: TextStyle(
                                 color: CustomPalette.text[100],
                                 fontSize: 20,
@@ -89,5 +92,27 @@ class IndicatorsCard extends StatelessWidget {
     VirusDayData last = data.last;
     VirusDayData previous = data[data.length-6];
     return (last.activeCases/previous.activeCases).toStringAsFixed(4);
+  }
+
+  String computeActiveCasesMobileAverage (List<VirusDayData> series) {
+    Map<String, int> values = new Map();
+    int windowSize = 11;
+    int sideWindowSize = (windowSize/2).floor();
+
+    for (int i=0, len=series.length; i<len; i++) {
+      VirusDayData data = series[i];
+      if (i<sideWindowSize || i>=len-sideWindowSize) {
+        values.putIfAbsent(data.time.toIso8601String(), () => null);
+      } else {
+        int sum = 0;
+        for (int j=i-sideWindowSize; j<=i+sideWindowSize; j++) {
+          sum += series[j].activeCases;
+        }
+        values.putIfAbsent(data.time.toIso8601String(), () => (sum~/windowSize));
+      }
+    }
+
+    print(values.values);
+    return "";
   }
 }
