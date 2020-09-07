@@ -14,6 +14,9 @@ class IndicatorsCard extends StatelessWidget {
           if (model.currentData == null || model.currentData.length == 0) {
             return Container ();
           } else {
+            Map<DateTime, int> activeCasesProgression =
+              computeActiveCasesMobileAverage(model.currentData);
+
             return Container (
               margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
               child: Stack (
@@ -66,7 +69,7 @@ class IndicatorsCard extends StatelessWidget {
                             child: model.isParsingData ? Center (
                               child: CircularProgressIndicator(),
                             ) : new Text(
-                              "Active cases progression: ${getActiveCasesProgressionRate(model.currentData)}",
+                              "Active cases progression: ${getActiveCasesProgressionRate(activeCasesProgression)}",
                               style: TextStyle(
                                 color: CustomPalette.text[100],
                                 fontSize: 20,
@@ -80,7 +83,7 @@ class IndicatorsCard extends StatelessWidget {
                           padding: EdgeInsets.only(bottom: 10),
                           height: 200,
                           child: ActiveCasesChart.fromValues(
-                              computeActiveCasesMobileAverage(model.currentData)
+                              activeCasesProgression
                           ),
                         )
                       ],
@@ -94,11 +97,17 @@ class IndicatorsCard extends StatelessWidget {
     );
   }
 
-  /// Computes active cases progression rate with data from 5 days ago.
-  String getActiveCasesProgressionRate (List<VirusDayData> data) {
-    VirusDayData last = data.last;
-    VirusDayData previous = data[data.length-6];
-    return (last.activeCases/previous.activeCases).toStringAsFixed(4);
+  String getActiveCasesProgressionRate (Map<DateTime, int> data) {
+    List<DateTime> keys = data.keys.toList();
+    int index = keys.length-1;
+
+    while (data[keys[index]] == null) {
+      index--;
+    }
+
+    int lastComputedAverage = data[keys[index]];
+    int previousComputedAverage = data[keys[index-6]];
+    return (lastComputedAverage/previousComputedAverage).toStringAsFixed(4);
   }
 
   Map<DateTime, int> computeActiveCasesMobileAverage (List<VirusDayData> series) {
