@@ -23,7 +23,6 @@ class IndicatorsComputer {
     // TODO rates computing
     await new Future.delayed(const Duration(milliseconds: 0), () async {
       var data = await Provider.of<VirusGraphModel>(context).silentInit(context);
-      print(data);
     }).then((value) async {
 
       var report = new DailyReport(
