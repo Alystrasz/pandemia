@@ -1,7 +1,6 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
-import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 
 /// Chart used to display active cases progression
 class ActiveCasesChart extends StatelessWidget {

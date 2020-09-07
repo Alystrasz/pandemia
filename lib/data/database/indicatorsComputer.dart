@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:pandemia/data/database/database.dart';
 import 'package:pandemia/data/database/models/DailyReport.dart';
 import 'package:pandemia/data/state/AppModel.dart';
-import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:provider/provider.dart';
 var database = new AppDatabase();
 
@@ -22,7 +21,7 @@ class IndicatorsComputer {
 
     // TODO rates computing
     await new Future.delayed(const Duration(milliseconds: 0), () async {
-      var data = await Provider.of<VirusGraphModel>(context).silentInit(context);
+      // var data = await Provider.of<VirusGraphModel>(context).silentInit(context);
     }).then((value) async {
 
       var report = new DailyReport(
