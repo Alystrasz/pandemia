@@ -53,7 +53,7 @@ class ActiveCasesChart extends StatelessWidget {
     );
   }
 
-  factory ActiveCasesChart.fromValues (Map<DateTime, int> series, Function changeCallback, {String selectedProvince}) {
+  factory ActiveCasesChart.fromValues (Map<DateTime, int> series) {
     int max = 0;
     for (var d in series.values) {
       if (d != null && d > max) {

@@ -80,8 +80,8 @@ class IndicatorsCard extends StatelessWidget {
                           padding: EdgeInsets.only(bottom: 10),
                           height: 200,
                           child: ActiveCasesChart.fromValues(
-                              computeActiveCasesMobileAverage(model.currentData),
-                                  (v) { print(v); }),
+                              computeActiveCasesMobileAverage(model.currentData)
+                          ),
                         )
                       ],
                     ),
