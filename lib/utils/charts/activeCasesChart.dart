@@ -8,9 +8,8 @@ class ActiveCasesChart extends StatelessWidget {
   final List<charts.Series> seriesList;
   final int max;
   final bool animate;
-  final Function changeCallback;
 
-  ActiveCasesChart (this.seriesList, this.max, this.changeCallback, {this.animate});
+  ActiveCasesChart (this.seriesList, this.max, {this.animate});
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +24,6 @@ class ActiveCasesChart extends StatelessWidget {
       seriesList,
       animate: animate,
       dateTimeFactory: const charts.LocalDateTimeFactory(),
-      selectionModels: [
-        new charts.SelectionModelConfig(
-          type: charts.SelectionModelType.info,
-          changedListener: this.changeCallback,
-        )
-      ],
 
       primaryMeasureAxis: new charts.NumericAxisSpec(
         tickProviderSpec: new charts.StaticNumericTickProviderSpec( ticks ),
@@ -88,7 +81,6 @@ class ActiveCasesChart extends StatelessWidget {
     return new ActiveCasesChart (
       data,
       max,
-      changeCallback,
       animate: true,
     );
   }
