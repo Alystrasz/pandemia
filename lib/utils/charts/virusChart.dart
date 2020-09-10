@@ -1,5 +1,6 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
 import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 
@@ -9,8 +10,10 @@ class VirusChart extends StatelessWidget {
   final bool animate;
   final int max;
   final Function changeCallback;
+  final BuildContext context; // needed for translations
 
-  VirusChart (this.seriesList, this.max, this.changeCallback, {this.animate});
+  VirusChart (this.seriesList, this.max, this.changeCallback,
+      {this.animate, this.context});
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +74,8 @@ class VirusChart extends StatelessWidget {
     );
   }
 
-  factory VirusChart.fromDailyData (List<VirusDayData> series, Function changeCallback, {String selectedProvince}) {
+  factory VirusChart.fromDailyData (List<VirusDayData> series, Function changeCallback,
+     {String selectedProvince, BuildContext context}) {
     List<VirusDayData> graphSeries =
         selectedProvince != null ?
             series.where((VirusDayData d) => d.province == selectedProvince).toList() :
@@ -86,28 +90,28 @@ class VirusChart extends StatelessWidget {
 
     List<charts.Series<VirusDayData, DateTime>> data = [
       new charts.Series<VirusDayData, DateTime>(
-          id: 'Confirmed cases',
+          id: FlutterI18n.translate(context, "virus_progression_confirmed_cases"),
           colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
           domainFn: (VirusDayData exposition, _) => exposition.time,
           measureFn: (VirusDayData exposition, _) => exposition.confirmedCases,
           data: graphSeries
       ),
       new charts.Series<VirusDayData, DateTime>(
-          id: 'Death cases',
+          id: FlutterI18n.translate(context, "virus_progression_death_cases"),
           colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
           domainFn: (VirusDayData exposition, _) => exposition.time,
           measureFn: (VirusDayData exposition, _) => exposition.deathCases,
           data: graphSeries
       ),
       new charts.Series<VirusDayData, DateTime>(
-          id: 'Recovered cases',
+          id: FlutterI18n.translate(context, "virus_progression_recovered_cases"),
           colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
           domainFn: (VirusDayData exposition, _) => exposition.time,
           measureFn: (VirusDayData exposition, _) => exposition.recoveredCases,
           data: graphSeries
       ),
       new charts.Series<VirusDayData, DateTime>(
-          id: 'Active cases',
+          id: FlutterI18n.translate(context, "virus_progression_active_cases"),
           colorFn: (_, __) => charts.MaterialPalette.yellow.shadeDefault,
           domainFn: (VirusDayData exposition, _) => exposition.time,
           measureFn: (VirusDayData exposition, _) => exposition.activeCases,
@@ -120,6 +124,7 @@ class VirusChart extends StatelessWidget {
       max,
       changeCallback,
       animate: true,
+      context: context,
     );
   }
 }

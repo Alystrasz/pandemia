@@ -80,7 +80,8 @@ class _CountryVirusProgressCardState extends State<CountryVirusProgressCard> {
                         if (model.province != null) {
                           return VirusChart.fromDailyData(
                             model.currentData, _onSelectionChanged,
-                            selectedProvince: model.province
+                            selectedProvince: model.province,
+                            context: context,
                           );
                         } else {
                           List<String> provinces = new List();
@@ -99,6 +100,7 @@ class _CountryVirusProgressCardState extends State<CountryVirusProgressCard> {
                             return VirusChart.fromDailyData(
                               model.currentData, _onSelectionChanged,
                               selectedProvince: provinces.length > 1 ? provinces[0] : null,
+                              context: context,
                             );
                           }
 
