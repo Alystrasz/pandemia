@@ -15,6 +15,11 @@ import 'package:provider/provider.dart';
 class Covid19ApiParser {
     final CountryCache _cache = new CountryCache();
     final LocalStorage _storage = new LocalStorage('pandemia_app.json');
+    http.Client _client;
+
+    Covid19ApiParser({http.Client client}) {
+      this._client = client != null ? client : http.Client();
+    }
 
     /// Are countries locally stored or not?
     Future<bool> _hasDownloadedCountries () async {
@@ -26,7 +31,7 @@ class Covid19ApiParser {
       String url = "https://api.covid19api.com/countries";
       String encodedUrl = Uri.encodeFull(url);
 
-      var response = await http.get(encodedUrl);
+      var response = await this._client.get(encodedUrl);
       var json = jsonDecode(response.body) as List;
       List<Country> countries = json.map((tagJson) =>
           Country.fromApi(tagJson)).toList();
@@ -111,7 +116,7 @@ class Covid19ApiParser {
       String url = "https://api.covid19api.com/dayone/country/$countrySlug";
       String encodedUrl = Uri.encodeFull(url);
       print('hitting $url');
-      var request = http.get(encodedUrl);
+      var request = this._client.get(encodedUrl);
 
       if (countrySlug != 'united-states') {
         request.timeout(Duration(seconds: 10), onTimeout: () {
