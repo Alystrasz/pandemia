@@ -28,6 +28,7 @@
   "home_ratemsg_stayhome": "J'ai été exposé à coup sûr aujourd'hui, je dois rester chez moi",
 
   "word_place": "endroit",
+  "word_country": "Pays",
 
   "places_searchbar_label": "Rechercher un endroit...",
   "places_place_added_toast":  "Endroit ajouté aux favoris.",
@@ -50,6 +51,22 @@
   "favorites_usual_popularity_text1": "Lieu habituellement rempli à",
   "favorites_usual_popularity_text2": "entre",
   "favorites_usual_popularity_text3": "et",
+
+  "virus_progression_touch_message": "Touchez pour accéder à des informations supplémentaires",
+  "virus_progression_title": "Progression du virus",
+  "virus_progression_country_selection_text": "Sélectionnez votre pays pour assurer un meilleur calcul de votre exposition.",
+  "virus_progression_selected_province": "Région ",
+  "virus_progression_graph_title": "Progression locale du virus",
+  "virus_progression_indicators_title": "Indicators",
+  "virus_progression_indicators_subtitle": "Indicateurs locaux de progression de la pandémie",
+  "virus_progression_confirmed_cases": "Cas confirmés ",
+  "virus_progression_active_cases": "Cas actifs ",
+  "virus_progression_recovered_cases": "Cas rétablis ",
+  "virus_progression_death_cases": "Décès ",
+  "virus_progression_current_active_cases": "cas actifs en ce moment",
+  "virus_progression_active_cases_rate": "Taux d'évolution des cas actifs ",
+  "virus_progression_pandemic_progressing": "La pandémie progresse",
+  "virus_progression_pandemic_regressing": "La pandémie régresse",
 
   "day_1": "Lundi",
   "day_2": "Mardi",

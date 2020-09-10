@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,8 @@ class ProvinceCard extends StatelessWidget {
               width: 5000,
               margin: EdgeInsets.only(bottom: 10),
               child: new Text(
-                'Selected province: ${model.province}',
+                '${FlutterI18n.translate(context, "virus_progression_selected_province")}: '
+                    '${model.province}',
                 style: TextStyle(
                     color: CustomPalette.text[500],
                     fontSize: 16,

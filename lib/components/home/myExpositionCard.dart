@@ -55,7 +55,7 @@ class MyExpositionCard extends StatelessWidget {
                   Container(
                       child: Center (
                         child: new Text(
-                          "Touch to access virus progression details",
+                          FlutterI18n.translate(context, "virus_progression_touch_message"),
                           style: TextStyle(
                               color: CustomPalette.text[600],
                               fontSize: 14,

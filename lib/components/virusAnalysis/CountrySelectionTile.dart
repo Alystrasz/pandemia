@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
 import 'package:pandemia/utils/countrySelection/Country.dart';
@@ -38,7 +39,7 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
               children: <Widget>[
                 Container(
                   child: new Text(
-                    'Country',
+                    FlutterI18n.translate(context, "word_country"),
                     style: TextStyle(
                         color: CustomPalette.text[100],
                         fontSize: 18,
@@ -50,7 +51,7 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
 
                 Container(
                     child: new Text(
-                      "Please select your country to ensure better virus exposition computation results.",
+                      FlutterI18n.translate(context, "virus_progression_country_selection_text"),
                       style: TextStyle(
                           color: CustomPalette.text[600],
                           fontSize: 16,

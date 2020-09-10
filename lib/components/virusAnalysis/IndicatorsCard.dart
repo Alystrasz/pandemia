@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
 import 'package:pandemia/utils/charts/activeCasesChart.dart';
@@ -30,7 +31,7 @@ class IndicatorsCard extends StatelessWidget {
                       children: <Widget>[
                         Container(
                           child: new Text(
-                            'Indicators',
+                            FlutterI18n.translate(context, "virus_progression_indicators_title"),
                             style: TextStyle(
                                 color: CustomPalette.text[100],
                                 fontSize: 18,
@@ -42,7 +43,7 @@ class IndicatorsCard extends StatelessWidget {
 
                         Container(
                             child: new Text(
-                              "Pandemic indicators for your region",
+                              FlutterI18n.translate(context, "virus_progression_indicators_subtitle"),
                               style: TextStyle(
                                   color: CustomPalette.text[600],
                                   fontSize: 16,
@@ -59,7 +60,8 @@ class IndicatorsCard extends StatelessWidget {
                               Container(
                                   margin: EdgeInsets.only(top: 0),
                                   child: Text(
-                                    "${model.currentData.last.activeCases} active cases now",
+                                    "${model.currentData.last.activeCases} "
+                                        "${FlutterI18n.translate(context, "virus_progression_current_active_cases")}",
                                     style: TextStyle(
                                       color: CustomPalette.text[100],
                                       fontSize: 20,
@@ -71,7 +73,8 @@ class IndicatorsCard extends StatelessWidget {
                               Container(
                                   margin: EdgeInsets.only(top: 25),
                                   child: Text(
-                                    "Active cases progression rate: ${rate.toStringAsFixed(3)}",
+                                    "${FlutterI18n.translate(context, "virus_progression_active_cases_rate")}: "
+                                        "${rate.toStringAsFixed(3)}",
                                     style: TextStyle(
                                       color: CustomPalette.text[100],
                                       fontSize: 20,
@@ -83,7 +86,9 @@ class IndicatorsCard extends StatelessWidget {
                               Container(
                                   margin: EdgeInsets.only(top: 48),
                                   child: Text(
-                                    rate > 1 ? "Pandemic is progressing" : "Pandemic is regressing",
+                                    rate > 1 ?
+                                      FlutterI18n.translate(context, "virus_progression_pandemic_progressing") :
+                                      FlutterI18n.translate(context, "virus_progression_pandemic_regressing"),
                                     style: TextStyle(
                                       color: CustomPalette.text[100],
                                       fontSize: 20,

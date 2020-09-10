@@ -28,6 +28,7 @@
   "home_ratemsg_stayhome": "I certainly have been exposed today, I must stay home",
 
   "word_place": "place",
+  "word_country": "Country",
 
   "places_searchbar_label": "Search place...",
   "places_place_added_toast":  "Place added to favorites.",
@@ -50,6 +51,22 @@
   "favorites_usual_popularity_text1": "This place usual popularity is",
   "favorites_usual_popularity_text2": "between",
   "favorites_usual_popularity_text3": "and",
+
+  "virus_progression_touch_message": "Touch to access virus progression details",
+  "virus_progression_title": "Virus exposition analysis",
+  "virus_progression_country_selection_text": "Please select your country to ensure better virus exposition computation results.",
+  "virus_progression_selected_province": "Selected province",
+  "virus_progression_graph_title": "Virus progression",
+  "virus_progression_indicators_title": "Indicators",
+  "virus_progression_indicators_subtitle": "Pandemic indicators for your region",
+  "virus_progression_confirmed_cases": "Confirmed cases",
+  "virus_progression_active_cases": "Active cases",
+  "virus_progression_recovered_cases": "Recovered cases",
+  "virus_progression_death_cases": "Death cases",
+  "virus_progression_current_active_cases": "active cases now",
+  "virus_progression_active_cases_rate": "Active cases progression rate",
+  "virus_progression_pandemic_progressing": "Pandemic is progressing",
+  "virus_progression_pandemic_regressing": "Pandemic is regressing",
 
   "day_1": "Monday",
   "day_2": "Tuesday",
