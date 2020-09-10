@@ -17,7 +17,7 @@ class VirusGraphModel extends ChangeNotifier {
   static final Covid19ApiParser parser = new Covid19ApiParser();
   bool isParsingData = true;
   List<VirusDayData> currentData = List();
-  bool isSilent = true;
+  bool isSilent = false;
   
 
   setSelectedCountry (String value, BuildContext context) {
