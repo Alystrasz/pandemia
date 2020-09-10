@@ -126,7 +126,8 @@ class IndicatorsCard extends StatelessWidget {
 
     int lastComputedAverage = data[keys[index]];
     int previousComputedAverage = data[keys[index-6]];
-    return lastComputedAverage/previousComputedAverage;
+    return previousComputedAverage == 0 ?
+        0 : lastComputedAverage/previousComputedAverage;
   }
 
   /// Computes active cases moving averages (https://en.wikipedia.org/wiki/Moving_average)
