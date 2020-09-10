@@ -4,9 +4,13 @@ import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 
 /// Stores country data in a json file locally.
 class CountryCache {
-  final LocalStorage _storage = new LocalStorage('pandemia_app.json');
+  LocalStorage _storage;
   final String _countriesDataPrefix = 'country_data_';
   final String _countriesKey = 'countries';
+
+  CountryCache([String fileName = 'pandemia_app.json']) {
+    this._storage = new LocalStorage('pandemia_app.json');
+  }
 
 
   // names handling
