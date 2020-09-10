@@ -42,6 +42,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  test: 1.14.4
+  # TODO remove flutter_test package and update test version
 
 
 # For information on the generic Dart part of this file, see the
