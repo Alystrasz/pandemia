@@ -71,7 +71,7 @@ class IndicatorsCard extends StatelessWidget {
                               Container(
                                   margin: EdgeInsets.only(top: 25),
                                   child: Text(
-                                    "Active cases progression: ${rate.toStringAsFixed(3)}",
+                                    "Active cases progression rate: ${rate.toStringAsFixed(3)}",
                                     style: TextStyle(
                                       color: CustomPalette.text[100],
                                       fontSize: 20,
