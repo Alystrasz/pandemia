@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
@@ -10,7 +11,15 @@ import 'package:pandemia/components/virusAnalysis/ProvinceSelectionDialog.dart';
 import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 import 'package:provider/provider.dart';
 
-class CountryVirusProgressCard extends StatelessWidget {
+class CountryVirusProgressCard extends StatefulWidget {
+  final BuildContext context;
+  CountryVirusProgressCard({this.context});
+
+  @override
+  State<CountryVirusProgressCard> createState() => _CountryVirusProgressCardState();
+}
+
+class _CountryVirusProgressCardState extends State<CountryVirusProgressCard> {
   void _onSelectionChanged (dynamic data) {
     VirusDayData stats = data.selectedDatum[0].datum;
     String date = "${stats.time.day < 10 ? "0" + stats.time.day.toString() : stats.time.day}/"
@@ -18,10 +27,11 @@ class CountryVirusProgressCard extends StatelessWidget {
           "0" + stats.time.month.toString() :
           stats.time.month}"
         "/${stats.time.year}";
-    String message = "$date\nConfirmed cases: ${stats.confirmedCases}"
-        "\nActive cases: ${stats.activeCases}"
-        "\nRecovered cases: ${stats.recoveredCases}"
-        "\nDeath cases: ${stats.deathCases}";
+    String message = "$date\n"
+        "${FlutterI18n.translate(widget.context, "virus_progression_confirmed_cases")}: ${stats.confirmedCases}"
+        "\n${FlutterI18n.translate(widget.context, "virus_progression_active_cases")}: ${stats.activeCases}"
+        "\n${FlutterI18n.translate(widget.context, "virus_progression_recovered_cases")}: ${stats.recoveredCases}"
+        "\n${FlutterI18n.translate(widget.context, "virus_progression_death_cases")}: ${stats.deathCases}";
 
     Fluttertoast.showToast(
         msg: message,
@@ -34,7 +44,6 @@ class CountryVirusProgressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return new Consumer<VirusGraphModel>(
       builder: (context, model, child) {
         return Container (
@@ -105,7 +114,7 @@ class CountryVirusProgressCard extends StatelessWidget {
 
               Container(
                 child: new Text(
-                  "Virus progression",
+                  FlutterI18n.translate(context, "virus_progression_graph_title"),
                   style: TextStyle(
                       color: CustomPalette.text[100],
                       fontSize: 18,

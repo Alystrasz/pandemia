@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:pandemia/components/virusAnalysis/IndicatorsCard.dart';
 import 'package:pandemia/components/virusAnalysis/ProvinceCard.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
@@ -19,13 +20,15 @@ class _VirusAnalyzeViewState extends State<VirusAnalyzeView> {
       backgroundColor: CustomPalette.background[700],
       appBar: AppBar(
         backgroundColor: CustomPalette.background[400],
-        title: Text("Virus exposition analysis"),
+        title: Text(
+            FlutterI18n.translate(context, "virus_progression_title")
+        ),
       ),
       body: ListView(
           children: <Widget>[
             CountrySelectionTile(),
             ProvinceCard(),
-            CountryVirusProgressCard(),
+            CountryVirusProgressCard(context: context,),
             IndicatorsCard()
           ]
       )
