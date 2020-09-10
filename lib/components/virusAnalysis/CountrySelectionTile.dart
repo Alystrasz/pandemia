@@ -66,7 +66,7 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
                   child: FutureBuilder<List<Country>>(
                       future: _parser.getCountries(),
                       builder: (context, AsyncSnapshot<List<Country>> snapshot) {
-                        if (!snapshot.hasData) {
+                        if (!snapshot.hasData || _value == "") {
                           return Center(
                             child: CircularProgressIndicator(),
                           );
