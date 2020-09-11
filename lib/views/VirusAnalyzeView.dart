@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:pandemia/components/virusAnalysis/CityCard.dart';
 import 'package:pandemia/components/virusAnalysis/IndicatorsCard.dart';
 import 'package:pandemia/components/virusAnalysis/ProvinceCard.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
@@ -28,6 +29,7 @@ class _VirusAnalyzeViewState extends State<VirusAnalyzeView> {
           children: <Widget>[
             CountrySelectionTile(),
             ProvinceCard(),
+            CityCard(),
             CountryVirusProgressCard(context: context,),
             IndicatorsCard()
           ]

@@ -56,6 +56,7 @@
   "virus_progression_title": "Virus exposition analysis",
   "virus_progression_country_selection_text": "Please select your country to ensure better virus exposition computation results.",
   "virus_progression_selected_province": "Selected province",
+  "virus_progression_selected_city": "Selected city",
   "virus_progression_graph_title": "Virus progression",
   "virus_progression_indicators_title": "Indicators",
   "virus_progression_indicators_subtitle": "Pandemic indicators for your region",
