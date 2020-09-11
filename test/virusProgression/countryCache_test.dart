@@ -1,5 +1,5 @@
+import 'package:flutter_test/flutter_test.dart';
 import 'package:pandemia/utils/countrySelection/CountryCache.dart';
-import 'package:test/test.dart';
 
 void main () {
   test('Cache should be empty at start', () async {

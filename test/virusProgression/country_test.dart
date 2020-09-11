@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter_test/flutter_test.dart';
 import 'package:pandemia/utils/countrySelection/Country.dart';
-import 'package:test/test.dart';
 
 void main () {
   test('Country should be built from API', () {

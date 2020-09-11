@@ -42,7 +42,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  test: 1.14.4
   mockito: 4.0.0
   # TODO remove flutter_test package and update test version
 
