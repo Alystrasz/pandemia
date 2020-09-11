@@ -1,6 +1,7 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
 import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 
@@ -76,11 +77,8 @@ class VirusChart extends StatelessWidget {
 
   factory VirusChart.fromDailyData (List<VirusDayData> series, Function changeCallback,
      {String selectedProvince, BuildContext context}) {
-    List<VirusDayData> graphSeries =
-        selectedProvince != null ?
-            series.where((VirusDayData d) => d.province == selectedProvince).toList() :
-            series;
 
+    List<VirusDayData> graphSeries = VirusGraphModel.filterDataByProvince(series, selectedProvince);
     int max = 0;
     for (var d in graphSeries) {
       if (d.confirmedCases > max) {

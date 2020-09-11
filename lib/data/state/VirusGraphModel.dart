@@ -31,7 +31,7 @@ class VirusGraphModel extends ChangeNotifier {
   setProvince (String value, bool shouldNotifyListeners) {
     this.province = value;
     _storage.setItem(_selectedProvinceKey, value);
-    filterDataByProvince();
+    this.currentData = filterDataByProvince(this.currentData, province);
 
     if (shouldNotifyListeners && !isSilent)
       notifyListeners();
@@ -46,21 +46,19 @@ class VirusGraphModel extends ChangeNotifier {
 
   setData (List<VirusDayData> data) {
     this.isParsingData = false;
-    this.currentData = data;
-
-    filterDataByProvince();
+    this.currentData = filterDataByProvince(data, province);
     if (!isSilent)
       notifyListeners();
   }
 
-  void filterDataByProvince () {
-    if (this.currentData == null) {
-      return;
+  static List<VirusDayData> filterDataByProvince (List<VirusDayData> data, String province) {
+    if (data == null) {
+      return null;
     }
 
-    this.currentData = province != null ?
-    currentData.where((VirusDayData d) => d.province == province).toList() :
-    currentData;
+    return province != null ?
+      data.where((VirusDayData d) => d.province == province).toList() :
+      data;
   }
 
   Future<String> init (BuildContext context) async {
