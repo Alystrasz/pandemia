@@ -5,13 +5,13 @@ import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 /// Stores country data in a json file locally.
 class CountryCache {
   LocalStorage _storage;
-  LocalStorage _USstorage;
+  LocalStorage _usStorage;
   final String _countriesDataPrefix = 'country_data_';
   final String _countriesKey = 'countries';
 
   CountryCache([String fileName = 'pandemia_app.json']) {
     this._storage = new LocalStorage('pandemia_app.json');
-    this._USstorage = new LocalStorage('us_pandemia_app.json');
+    this._usStorage = new LocalStorage('us_pandemia_app.json');
   }
 
 
@@ -36,10 +36,10 @@ class CountryCache {
   // present in data)
   Future<List<VirusDayData>> retrieveCountryData (String countrySlug) async {
     await _storage.ready;
-    await _USstorage.ready;
+    await _usStorage.ready;
     String key = "$_countriesDataPrefix$countrySlug";
     List<dynamic> data = countrySlug == 'united-states' ?
-      _USstorage.getItem(key) : _storage.getItem(key);
+      _usStorage.getItem(key) : _storage.getItem(key);
 
     // check if no data is stored or if API does not give data for the country
     if (data == null) {
@@ -68,6 +68,6 @@ class CountryCache {
     await _storage.ready;
     String key = "$_countriesDataPrefix$countrySlug";
     countrySlug == 'united-states' ?
-      _USstorage.setItem(key, data) : _storage.setItem(key, data);
+      _usStorage.setItem(key, data) : _storage.setItem(key, data);
   }
 }
