@@ -55,6 +55,7 @@
   "virus_progression_touch_message": "Touch to access virus progression details",
   "virus_progression_title": "Virus exposition analysis",
   "virus_progression_country_selection_text": "Please select your country to ensure better virus exposition computation results.",
+  "virus_progression_home_country": "Home country",
   "virus_progression_selected_province": "Selected province",
   "virus_progression_selected_city": "Selected city",
   "virus_progression_graph_title": "Virus progression",

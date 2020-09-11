@@ -97,20 +97,24 @@ class _CountryVirusProgressCardState extends State<CountryVirusProgressCard> {
                           if (provinces.length > 1) {
                             print("multiple provinces detected");
                             Timer(Duration(milliseconds: 1), () {
-                              SelectionDialog
-                                ('Choose a province', provinces,
+                              SelectionDialog (
+                                  title: 'Choose a province',
+                                  elements: provinces,
+                                  context: context,
                                   selectionCallback: (e) {
                                     Provider.of<VirusGraphModel>(context).setProvince(e, true);
-                                  }).show(context);
+                                  }).show();
                             });
                           } else if (cities.length > 1) {
                             print('multiple cities detected');
                             Timer(Duration(milliseconds: 1), () {
-                              SelectionDialog
-                                ('Choose a city', cities,
+                              SelectionDialog (
+                                  title: 'Choose a city',
+                                  elements: cities,
+                                  context: context,
                                   selectionCallback: (e) {
                                     Provider.of<VirusGraphModel>(context).setCity(e);
-                                  }).show(context);
+                                  }).show();
                             });
                           } else {
                             return VirusChart.fromDailyData(
