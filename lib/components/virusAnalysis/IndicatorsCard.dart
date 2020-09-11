@@ -13,7 +13,7 @@ class IndicatorsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<VirusGraphModel>(
         builder: (context, model, child) {
-          if (model.currentData == null || model.currentData.length == 0) {
+          if (model.currentData == null || model.currentData.length < 11) {
             return Container ();
           } else {
             Map<DateTime, int> activeCasesProgression =
