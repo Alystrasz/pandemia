@@ -56,9 +56,21 @@ class VirusGraphModel extends ChangeNotifier {
       return null;
     }
 
-    return province != null ?
+    List<VirusDayData> tmp = province != null ?
       data.where((VirusDayData d) => d.province == province).toList() :
       data;
+
+    List<String> cityNames = List();
+    for (VirusDayData d in tmp) {
+      if (!cityNames.contains(d.city)) {
+        cityNames.add(d.city);
+      }
+    }
+
+    if (cityNames.length > 1)
+      print('need to be sorted by city');
+
+    return tmp;
   }
 
   Future<String> init (BuildContext context) async {
