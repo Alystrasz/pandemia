@@ -33,7 +33,7 @@ class VirusGraphModel extends ChangeNotifier {
   setProvince (String value, bool shouldNotifyListeners) {
     this.province = value;
     _storage.setItem(_selectedProvinceKey, value);
-    this.currentData = filterDataByProvince(this.currentData, province);
+    this.currentData = filterDataByProvince(this.currentData, province, this.city);
 
     if (shouldNotifyListeners && !isSilent)
       notifyListeners();
@@ -41,6 +41,7 @@ class VirusGraphModel extends ChangeNotifier {
 
   setCity (String value) {
     this.city = value;
+    this.currentData = filterDataByProvince(this.currentData, province, this.city);
     if (!isSilent)
       notifyListeners();
   }
@@ -54,12 +55,12 @@ class VirusGraphModel extends ChangeNotifier {
 
   setData (List<VirusDayData> data) {
     this.isParsingData = false;
-    this.currentData = filterDataByProvince(data, province);
+    this.currentData = filterDataByProvince(data, province, city);
     if (!isSilent)
       notifyListeners();
   }
 
-  static List<VirusDayData> filterDataByProvince (List<VirusDayData> data, String province) {
+  static List<VirusDayData> filterDataByProvince (List<VirusDayData> data, String province, String city) {
     if (data == null) {
       return null;
     }
@@ -68,15 +69,9 @@ class VirusGraphModel extends ChangeNotifier {
       data.where((VirusDayData d) => d.province == province).toList() :
       data;
 
-    List<String> cityNames = List();
-    for (VirusDayData d in tmp) {
-      if (!cityNames.contains(d.city)) {
-        cityNames.add(d.city);
-      }
-    }
-
-    if (cityNames.length > 1)
-      print('need to be sorted by city');
+    tmp = city != null ?
+      tmp.where((VirusDayData d) => d.city == city).toList() :
+      tmp;
 
     return tmp;
   }

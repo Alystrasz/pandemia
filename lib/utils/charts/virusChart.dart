@@ -76,9 +76,9 @@ class VirusChart extends StatelessWidget {
   }
 
   factory VirusChart.fromDailyData (List<VirusDayData> series, Function changeCallback,
-     {String selectedProvince, BuildContext context}) {
+     {String selectedProvince, String selectedCity, BuildContext context}) {
 
-    List<VirusDayData> graphSeries = VirusGraphModel.filterDataByProvince(series, selectedProvince);
+    List<VirusDayData> graphSeries = VirusGraphModel.filterDataByProvince(series, selectedProvince, selectedCity);
     int max = 0;
     for (var d in graphSeries) {
       if (d.confirmedCases > max) {
