@@ -24,6 +24,7 @@ class VirusGraphModel extends ChangeNotifier {
   setSelectedCountry (String value, BuildContext context) {
     this.selectedCountry = value;
     this.province = null;
+    this.city = null;
     _storage.setItem(_selectedCountryKey, value);
     _storage.setItem(_selectedProvinceKey, null);
     parser.getCountryData(context);
@@ -35,6 +36,12 @@ class VirusGraphModel extends ChangeNotifier {
     this.currentData = filterDataByProvince(this.currentData, province);
 
     if (shouldNotifyListeners && !isSilent)
+      notifyListeners();
+  }
+
+  setCity (String value) {
+    this.city = value;
+    if (!isSilent)
       notifyListeners();
   }
 
