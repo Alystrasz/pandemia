@@ -43,7 +43,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: 4.0.0
-  # TODO remove flutter_test package and update test version
 
 
 # For information on the generic Dart part of this file, see the
