@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
-import 'package:provider/provider.dart';
 
-class ProvinceSelectionDialog {
+/// Fullscreen dialog enabling user to select an element among a list given
+/// at the class constructor.
+class SelectionDialog {
   SimpleDialog _dialog;
   BuildContext _context;
+  Function _selectionCallback;
 
-  ProvinceSelectionDialog (List<String> provinces) {
-     provinces.sort((a, b) => a.compareTo(b));
+  SelectionDialog
+      (String title, List<String> elements, {@required Function selectionCallback}) {
+
+     elements.sort((a, b) => a.compareTo(b));
     _dialog = SimpleDialog(
-      title: const Text('Choose a province', style: TextStyle(color: Color(0xFFDDDDDD))),
+      title: Text(title, style: TextStyle(color: Color(0xFFDDDDDD))),
       backgroundColor: CustomPalette.background[500],
-      children: provinces.map((String p) => ListTile(
-        title: Text(p == '' ? "Home country" : p, style: TextStyle(color: CustomPalette.text[400])),
+      children: elements.map((String element) => ListTile(
+        title: Text(element == '' ? "Home country" : element, style: TextStyle(color: CustomPalette.text[400])),
         onTap: () {
-          Provider.of<VirusGraphModel>(_context).setProvince(p, true);
+          this._selectionCallback(element);
           Navigator.pop(_context);
         },
       )).toList()
     );
+    _selectionCallback = selectionCallback;
   }
 
   void show (BuildContext context) {

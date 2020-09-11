@@ -4,11 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pandemia/components/virusAnalysis/CitySelectionDialog.dart';
 import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
 import 'package:pandemia/utils/charts/virusChart.dart';
-import 'package:pandemia/components/virusAnalysis/ProvinceSelectionDialog.dart';
+import 'package:pandemia/components/virusAnalysis/SelectionDialog.dart';
 import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 import 'package:provider/provider.dart';
 
@@ -98,14 +97,20 @@ class _CountryVirusProgressCardState extends State<CountryVirusProgressCard> {
                           if (provinces.length > 1) {
                             print("multiple provinces detected");
                             Timer(Duration(milliseconds: 1), () {
-                              var dialog = ProvinceSelectionDialog (provinces);
-                              dialog.show(context);
+                              SelectionDialog
+                                ('Choose a province', provinces,
+                                  selectionCallback: (e) {
+                                    Provider.of<VirusGraphModel>(context).setProvince(e, true);
+                                  }).show(context);
                             });
                           } else if (cities.length > 1) {
                             print('multiple cities detected');
                             Timer(Duration(milliseconds: 1), () {
-                              var dialog = CitySelectionDialog (cities);
-                              dialog.show(context);
+                              SelectionDialog
+                                ('Choose a city', cities,
+                                  selectionCallback: (e) {
+                                    Provider.of<VirusGraphModel>(context).setCity(e);
+                                  }).show(context);
                             });
                           } else {
                             return VirusChart.fromDailyData(
