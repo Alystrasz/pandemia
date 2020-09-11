@@ -77,7 +77,7 @@ class _CountryVirusProgressCardState extends State<CountryVirusProgressCard> {
                         );
                       } else {
                         // checking if a province has been selected
-                        if (model.province != null) {
+                        if (model.province != null && model.city != null) {
                           return VirusChart.fromDailyData(
                             model.currentData, _onSelectionChanged,
                             selectedProvince: model.province,
@@ -85,9 +85,13 @@ class _CountryVirusProgressCardState extends State<CountryVirusProgressCard> {
                           );
                         } else {
                           List<String> provinces = new List();
+                          List<String> cities = new List();
+
                           for (var stat in model.currentData) {
                             if (!provinces.contains(stat.province))
                               provinces.add(stat.province);
+                            if (!cities.contains(stat.city))
+                              cities.add(stat.city);
                           }
 
                           if (provinces.length > 1) {
@@ -96,6 +100,8 @@ class _CountryVirusProgressCardState extends State<CountryVirusProgressCard> {
                               var dialog = ProvinceSelectionDialog (provinces);
                               dialog.show(context, model.currentData);
                             });
+                          } else if (cities.length > 1) {
+                            print('multiple cities detected');
                           } else {
                             return VirusChart.fromDailyData(
                               model.currentData, _onSelectionChanged,

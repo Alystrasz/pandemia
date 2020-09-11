@@ -7,6 +7,7 @@ import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 class VirusGraphModel extends ChangeNotifier {
   String selectedCountry = "";
   String province = "";
+  String city;
   static final defaultCountry = 'france';
   static final defaultProvince = '';
 
