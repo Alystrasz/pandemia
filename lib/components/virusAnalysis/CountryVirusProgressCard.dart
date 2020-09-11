@@ -98,7 +98,7 @@ class _CountryVirusProgressCardState extends State<CountryVirusProgressCard> {
                             print("multiple provinces detected");
                             Timer(Duration(milliseconds: 1), () {
                               var dialog = ProvinceSelectionDialog (provinces);
-                              dialog.show(context, model.currentData);
+                              dialog.show(context);
                             });
                           } else if (cities.length > 1) {
                             print('multiple cities detected');

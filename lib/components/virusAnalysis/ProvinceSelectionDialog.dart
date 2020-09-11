@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
-import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 import 'package:provider/provider.dart';
 
 class ProvinceSelectionDialog {
@@ -23,7 +22,7 @@ class ProvinceSelectionDialog {
     );
   }
 
-  void show (BuildContext context, List<VirusDayData> data) {
+  void show (BuildContext context) {
     this._context = context;
 
     showDialog(
