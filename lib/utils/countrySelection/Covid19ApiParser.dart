@@ -114,7 +114,7 @@ class Covid19ApiParser {
       if (cacheData.hasData && cacheData.isUpToDate) {
         Provider.of<VirusGraphModel>(context).setData(cacheData.data);
         return cacheData.data;
-      } else if (!cacheData.isUpToDate) {
+      } else if (cacheData.hasData && !cacheData.isUpToDate) {
         return await this._getMissingData(countrySlug, cacheData, context);
       }
 

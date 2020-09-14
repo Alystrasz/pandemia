@@ -45,10 +45,10 @@ class CountryCache {
     // check if no data is stored or if API does not give data for the country
     if (data == null) {
       print('no data stored for $countrySlug');
-      return CacheDataPayload(hasData: false);
+      return CacheDataPayload(hasData: false, isUpToDate: true);
     } else if (data.length == 0) {
       print('$countrySlug has no data available from API');
-      return CacheDataPayload(hasData: true, data: []);
+      return CacheDataPayload(hasData: true, data: [], isUpToDate: true);
     }
 
     VirusDayData lastDateData = VirusDayData.fromJson(data.last);
