@@ -54,7 +54,7 @@ class CountryCache {
     VirusDayData lastDateData = VirusDayData.fromJson(data.last);
     final now = DateTime.now();
     DateTime lastKnown =
-      DateTime(lastDateData.time.year, lastDateData.time.month-1, lastDateData.time.day);
+      DateTime(lastDateData.time.year, lastDateData.time.month, lastDateData.time.day);
     int deltaT = lastKnown
         .difference(DateTime(now.year, now.month, now.day)).inDays;
 
