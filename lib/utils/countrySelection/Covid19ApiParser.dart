@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/countrySelection/CacheDataPayload.dart';
@@ -114,7 +115,7 @@ class Covid19ApiParser {
         Provider.of<VirusGraphModel>(context).setData(cacheData.data);
         return cacheData.data;
       } else if (!cacheData.isUpToDate) {
-        return await this._getMissingData(cacheData);
+        return await this._getMissingData(countrySlug, cacheData);
       }
 
       String url = "https://api.covid19api.com/dayone/country/$countrySlug";
@@ -154,8 +155,17 @@ class Covid19ApiParser {
     }
 
     /// TODO
-    Future<List<VirusDayData>> _getMissingData (CacheDataPayload cached) async {
+    Future<List<VirusDayData>> _getMissingData (
+        String countrySlug,
+        CacheDataPayload cached) async {
+
+      DateFormat formatter = DateFormat("yyyy-MM-dd");
       print('last known data is from ${cached.lastKnownDataTime}');
+      String url = "https://api.covid19api.com/country/$countrySlug"
+          "?from=${formatter.format(cached.lastKnownDataTime)}"
+          "&to=${formatter.format(DateTime.now())}";
+      String encodedUrl = Uri.encodeFull(url);
+      print('hitting $encodedUrl');
       return cached.data;
     }
 }
