@@ -53,7 +53,9 @@ class CountryCache {
 
     VirusDayData lastDateData = VirusDayData.fromJson(data.last);
     final now = DateTime.now();
-    int deltaT = DateTime(lastDateData.time.year, lastDateData.time.month, lastDateData.time.day)
+    DateTime lastKnown =
+      DateTime(lastDateData.time.year, lastDateData.time.month, lastDateData.time.day);
+    int deltaT = lastKnown
         .difference(DateTime(now.year, now.month, now.day)).inDays;
 
     if (deltaT == -1) {
@@ -68,7 +70,8 @@ class CountryCache {
       return CacheDataPayload(
           hasData: true,
           data: data.map((e) => VirusDayData.fromJson(e)).toList(),
-          isUpToDate: false
+          isUpToDate: false,
+          lastKnownDataTime: lastKnown
       );
     }
   }

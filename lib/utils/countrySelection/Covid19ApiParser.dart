@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -112,6 +113,8 @@ class Covid19ApiParser {
       if (cacheData.hasData && cacheData.isUpToDate) {
         Provider.of<VirusGraphModel>(context).setData(cacheData.data);
         return cacheData.data;
+      } else if (!cacheData.isUpToDate) {
+        return await this._getMissingData(cacheData);
       }
 
       String url = "https://api.covid19api.com/dayone/country/$countrySlug";
@@ -148,5 +151,11 @@ class Covid19ApiParser {
       _cache.storeCountryData(countrySlug, data);
       Provider.of<VirusGraphModel>(context).setData(data);
       return data;
+    }
+
+    /// TODO
+    Future<List<VirusDayData>> _getMissingData (CacheDataPayload cached) async {
+      print('last known data is from ${cached.lastKnownDataTime}');
+      return cached.data;
     }
 }
