@@ -1,4 +1,5 @@
 import 'package:localstorage/localstorage.dart';
+import 'package:pandemia/utils/countrySelection/CacheDataPayload.dart';
 import 'package:pandemia/utils/countrySelection/Country.dart';
 import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
 
@@ -34,7 +35,7 @@ class CountryCache {
 
   // returns stored data if it's up to date (= if yesterday is the last day
   // present in data)
-  Future<List<VirusDayData>> retrieveCountryData (String countrySlug) async {
+  Future<CacheDataPayload> retrieveCountryData (String countrySlug) async {
     await _storage.ready;
     await _usStorage.ready;
     String key = "$_countriesDataPrefix$countrySlug";
@@ -44,10 +45,10 @@ class CountryCache {
     // check if no data is stored or if API does not give data for the country
     if (data == null) {
       print('no data stored for $countrySlug');
-      return null;
+      return CacheDataPayload(hasData: false);
     } else if (data.length == 0) {
       print('$countrySlug has no data available from API');
-      return [];
+      return CacheDataPayload(hasData: true, data: []);
     }
 
     VirusDayData lastDateData = VirusDayData.fromJson(data.last);
@@ -57,10 +58,18 @@ class CountryCache {
 
     if (deltaT == -1) {
       print('cached data for $countrySlug is up to date, returning it');
-      return data.map((e) => VirusDayData.fromJson(e)).toList();
+      return CacheDataPayload(
+          hasData: true,
+          data: data.map((e) => VirusDayData.fromJson(e)).toList(),
+          isUpToDate: true
+      );
     } else {
       print('cached data for $countrySlug is not valid, need to download it');
-      return null;
+      return CacheDataPayload(
+          hasData: true,
+          data: data.map((e) => VirusDayData.fromJson(e)).toList(),
+          isUpToDate: false
+      );
     }
   }
 

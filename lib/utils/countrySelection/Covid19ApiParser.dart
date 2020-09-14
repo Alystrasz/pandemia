@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
 import 'package:pandemia/data/state/VirusGraphModel.dart';
+import 'package:pandemia/utils/countrySelection/CacheDataPayload.dart';
 import 'package:pandemia/utils/countrySelection/Country.dart';
 import 'package:pandemia/utils/countrySelection/CountryCache.dart';
 import 'package:pandemia/utils/countrySelection/VirusDayData.dart';
@@ -107,10 +108,10 @@ class Covid19ApiParser {
       }
 
       // checking if cache has valid data
-      List<VirusDayData> data = await _cache.retrieveCountryData(countrySlug);
-      if (data != null) {
-        Provider.of<VirusGraphModel>(context).setData(data);
-        return data;
+      CacheDataPayload cacheData = await _cache.retrieveCountryData(countrySlug);
+      if (cacheData.hasData && cacheData.isUpToDate) {
+        Provider.of<VirusGraphModel>(context).setData(cacheData.data);
+        return cacheData.data;
       }
 
       String url = "https://api.covid19api.com/dayone/country/$countrySlug";
@@ -141,7 +142,7 @@ class Covid19ApiParser {
 
       var response = await request;
       var json = jsonDecode(response.body) as List;
-      data = json.map((dataJson) =>
+      List<VirusDayData> data = json.map((dataJson) =>
         VirusDayData.fromApi(dataJson)).toList();
 
       _cache.storeCountryData(countrySlug, data);
