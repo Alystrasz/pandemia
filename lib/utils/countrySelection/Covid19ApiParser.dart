@@ -115,7 +115,7 @@ class Covid19ApiParser {
         Provider.of<VirusGraphModel>(context).setData(cacheData.data);
         return cacheData.data;
       } else if (!cacheData.isUpToDate) {
-        return await this._getMissingData(countrySlug, cacheData);
+        return await this._getMissingData(countrySlug, cacheData, context);
       }
 
       String url = "https://api.covid19api.com/dayone/country/$countrySlug";
@@ -154,10 +154,10 @@ class Covid19ApiParser {
       return data;
     }
 
-    /// TODO
     Future<List<VirusDayData>> _getMissingData (
         String countrySlug,
-        CacheDataPayload cached) async {
+        CacheDataPayload cached,
+        BuildContext context) async {
 
       DateFormat formatter = DateFormat("yyyy-MM-dd");
       print('last known data is from ${cached.lastKnownDataTime}');
@@ -166,6 +166,17 @@ class Covid19ApiParser {
           "&to=${formatter.format(DateTime.now())}";
       String encodedUrl = Uri.encodeFull(url);
       print('hitting $encodedUrl');
-      return cached.data;
+      var request = this._client.get(encodedUrl);
+
+      var response = await request;
+      var json = jsonDecode(response.body) as List;
+      List<VirusDayData> newData = json.map((dataJson) =>
+          VirusDayData.fromApi(dataJson)).toList();
+      List<VirusDayData> completeData = cached.data;
+      completeData.addAll(newData);
+
+      _cache.storeCountryData(countrySlug, completeData);
+      Provider.of<VirusGraphModel>(context).setData(completeData);
+      return completeData;
     }
 }
