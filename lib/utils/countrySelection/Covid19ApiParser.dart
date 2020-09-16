@@ -205,8 +205,8 @@ class Covid19ApiParser {
 
       for (int i=0; i<downloadsCount; i++) {
         DateTime
-          fromDate = firstDataDate.add(Duration(days: i*(windowDaysLength))),
-          toDate = fromDate.add(Duration(days: windowDaysLength));
+          fromDate = firstDataDate.add(Duration(days: i*windowDaysLength)),
+          toDate = fromDate.add(Duration(days: windowDaysLength-1));
         url = "https://api.covid19api.com/country/united-states"
             "?from=${formatter.format(fromDate)}"
             "&to=${formatter.format(toDate)}";
