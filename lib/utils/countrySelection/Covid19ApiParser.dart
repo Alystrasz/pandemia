@@ -123,6 +123,7 @@ class Covid19ApiParser {
       print('hitting $url');
       var request = this._client.get(encodedUrl);
 
+
       if (countrySlug != 'united-states') {
         request.timeout(Duration(seconds: 10), onTimeout: () {
           Fluttertoast.showToast(
@@ -135,13 +136,7 @@ class Covid19ApiParser {
           return new http.Response("timeout", 504);
         });
       } else {
-        Fluttertoast.showToast(
-            msg: "US data might take some time to download.",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 2,
-            fontSize: 16.0
-        );
+        return _downloadUSData();
       }
 
       var response = await request;
@@ -187,5 +182,47 @@ class Covid19ApiParser {
       _cache.storeCountryData(countrySlug, completeData);
       Provider.of<VirusGraphModel>(context).setData(completeData);
       return completeData;
+    }
+
+    Future<List<VirusDayData>> _downloadUSData () async {
+      print('downloading US data...');
+      Fluttertoast.showToast(
+          msg: "US data might take some time to download.",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 2,
+          fontSize: 16.0
+      );
+
+      DateTime
+        firstDataDate = DateTime.parse("2020-01-22T00:00:00Z"),
+        now = DateTime.now();
+      final int
+        downloadsCount = 15,
+        totalDaysCount = now.difference(firstDataDate).inDays,
+        windowDaysLength = (totalDaysCount/downloadsCount).floor();
+
+      DateFormat formatter = DateFormat("yyyy-MM-dd");
+      String url = "";
+
+      for (int i=0; i<downloadsCount; i++) {
+        DateTime
+          fromDate = firstDataDate.add(Duration(days: i*(windowDaysLength))),
+          toDate = fromDate.add(Duration(days: windowDaysLength));
+        url = "https://api.covid19api.com/country/united-states"
+            "?from=${formatter.format(fromDate)}"
+            "&to=${formatter.format(toDate)}";
+
+        print("hitting $url");
+      }
+
+      // download last data window (which size is smaller than windowDaysLength)
+      DateTime fromDate = firstDataDate.add(Duration(days: downloadsCount*windowDaysLength));
+      url = "https://api.covid19api.com/country/united-states"
+          "?from=${formatter.format(fromDate)}"
+          "&to=${formatter.format(now)}";
+      print("hitting $url");
+
+      return [];
     }
 }
