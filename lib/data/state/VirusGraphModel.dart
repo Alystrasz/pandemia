@@ -14,6 +14,7 @@ class VirusGraphModel extends ChangeNotifier {
   final LocalStorage _storage = new LocalStorage('pandemia_app.json');
   final String _selectedCountryKey = "fav-country";
   final String _selectedProvinceKey = "fav-province";
+  final String _selectedCityKey = "fav-city";
 
   static final Covid19ApiParser parser = new Covid19ApiParser();
   bool isParsingData = true;
@@ -41,6 +42,7 @@ class VirusGraphModel extends ChangeNotifier {
 
   setCity (String value) {
     this.city = value;
+    _storage.setItem(_selectedCityKey, value);
     this.currentData = filterDataByProvince(this.currentData, province, this.city);
     if (!isSilent)
       notifyListeners();
@@ -80,8 +82,14 @@ class VirusGraphModel extends ChangeNotifier {
     await _storage.ready;
     String result = _storage.getItem(_selectedCountryKey);
     String province = _storage.getItem(_selectedProvinceKey);
+    String city = _storage.getItem(_selectedCityKey);
+
     this.selectedCountry = result;
     this.province = province == null ? '' : province;
+    this.city =
+      // only US provide such data detail
+      selectedCountry == 'united-states' && province != null ?
+          city : null;
 
     this.selectedCountry = result;
     this.province = province;
