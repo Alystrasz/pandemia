@@ -119,7 +119,7 @@ class Covid19ApiParser {
       }
 
       if (countrySlug == 'united-states') {
-        return _downloadUSData();
+        return _downloadUSData(context);
       }
 
       String url = "https://api.covid19api.com/dayone/country/$countrySlug";
@@ -182,7 +182,7 @@ class Covid19ApiParser {
       return completeData;
     }
 
-    Future<List<VirusDayData>> _downloadUSData () async {
+    Future<List<VirusDayData>> _downloadUSData (BuildContext context) async {
       print('downloading US data...');
       Fluttertoast.showToast(
           msg: "US data might take some time to download.",
@@ -202,6 +202,7 @@ class Covid19ApiParser {
 
       DateFormat formatter = DateFormat("yyyy-MM-dd");
       String url = "";
+      List<VirusDayData> results = List();
 
       for (int i=0; i<downloadsCount; i++) {
         DateTime
@@ -212,6 +213,11 @@ class Covid19ApiParser {
             "&to=${formatter.format(toDate)}";
 
         print("hitting $url");
+        var request = this._client.get(Uri.parse(url));
+        var response = await request;
+        var json = jsonDecode(response.body) as List;
+        results.addAll(json.map((dataJson) =>
+            VirusDayData.fromApi(dataJson)).toList());
       }
 
       // download last data window (which size is smaller than windowDaysLength)
@@ -219,8 +225,16 @@ class Covid19ApiParser {
       url = "https://api.covid19api.com/country/united-states"
           "?from=${formatter.format(fromDate)}"
           "&to=${formatter.format(now)}";
-      print("hitting $url");
 
-      return [];
+      print("hitting $url");
+      var request = this._client.get(Uri.parse(url));
+      var response = await request;
+      var json = jsonDecode(response.body) as List;
+      results.addAll(json.map((dataJson) =>
+          VirusDayData.fromApi(dataJson)).toList());
+
+      _cache.storeCountryData('united-states', results);
+      Provider.of<VirusGraphModel>(context).setData(results);
+      return results;
     }
 }
