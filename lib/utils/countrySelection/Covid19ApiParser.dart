@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:pandemia/data/state/DatasetDownloadModel.dart';
 import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/countrySelection/CacheDataPayload.dart';
 import 'package:pandemia/utils/countrySelection/Country.dart';
@@ -184,6 +185,8 @@ class Covid19ApiParser {
 
     Future<List<VirusDayData>> _downloadUSData (BuildContext context) async {
       print('downloading US data...');
+      Provider.of<DatasetDownloadModel>(context).setValue(null);
+
       Fluttertoast.showToast(
           msg: "US data might take some time to download.",
           toastLength: Toast.LENGTH_SHORT,
@@ -195,6 +198,7 @@ class Covid19ApiParser {
       DateTime
         firstDataDate = DateTime.parse("2020-01-22T00:00:00Z"),
         now = DateTime.now();
+      int counter = 0;
       final int
         downloadsCount = 15,
         totalDaysCount = now.difference(firstDataDate).inDays,
@@ -218,6 +222,7 @@ class Covid19ApiParser {
         var json = jsonDecode(response.body) as List;
         results.addAll(json.map((dataJson) =>
             VirusDayData.fromApi(dataJson)).toList());
+        Provider.of<DatasetDownloadModel>(context).setValue(++counter/downloadsCount);
       }
 
       // download last data window (which size is smaller than windowDaysLength)
@@ -232,6 +237,7 @@ class Covid19ApiParser {
       var json = jsonDecode(response.body) as List;
       results.addAll(json.map((dataJson) =>
           VirusDayData.fromApi(dataJson)).toList());
+      Provider.of<DatasetDownloadModel>(context).setValue(2); //ending
 
       _cache.storeCountryData('united-states', results);
       Provider.of<VirusGraphModel>(context).setData(results);

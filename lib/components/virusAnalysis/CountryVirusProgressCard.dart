@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pandemia/data/state/DatasetDownloadModel.dart';
 import 'package:pandemia/data/state/VirusGraphModel.dart';
 import 'package:pandemia/utils/CustomPalette.dart';
 import 'package:pandemia/utils/charts/virusChart.dart';
@@ -44,111 +45,134 @@ class _CountryVirusProgressCardState extends State<CountryVirusProgressCard> {
 
   @override
   Widget build(BuildContext context) {
-    return new Consumer<VirusGraphModel>(
-      builder: (context, model, child) {
-        return Container (
-          height: 300,
-          color: CustomPalette.background[600],
-          margin: EdgeInsets.only(bottom: 10),
-          child: Stack (
-            children: <Widget>[
-              Container (
-                child: Builder (
-                  builder: (context) {
-                    print(model);
+    return Column (
+      children: [
+        Consumer<VirusGraphModel>(
+          builder: (context, model, child) {
+            return Container (
+              height: 300,
+              color: CustomPalette.background[600],
+              child: Stack (
+                children: <Widget>[
+                  Container (
+                    child: Builder (
+                        builder: (context) {
+                          print(model);
 
-                    if (model.isParsingData || model.selectedCountry == '') {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      if (model.currentData.length == 0) {
-                        return Container (
-                          child: Center (
-                            child: Text (
-                              "No data for this country.",
-                              style: TextStyle(
-                                  color: CustomPalette.text[100],
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w300
-                              ),
-                            ),
-                          ),
-                        );
-                      } else {
-                        // checking if a province has been selected
-                        if (model.province != null && model.city != null) {
-                          return VirusChart.fromDailyData(
-                            model.currentData, _onSelectionChanged,
-                            selectedProvince: model.province,
-                            context: context,
-                          );
-                        } else {
-                          List<String> provinces = new List();
-                          List<String> cities = new List();
-
-                          for (var stat in model.currentData) {
-                            if (!provinces.contains(stat.province))
-                              provinces.add(stat.province);
-                            if (!cities.contains(stat.city))
-                              cities.add(stat.city);
-                          }
-
-                          if (provinces.length > 1) {
-                            print("multiple provinces detected");
-                            Timer(Duration(milliseconds: 1), () {
-                              SelectionDialog (
-                                  title: 'Choose a province',
-                                  elements: provinces,
-                                  context: context,
-                                  selectionCallback: (e) {
-                                    Provider.of<VirusGraphModel>(context).setProvince(e, true);
-                                  }).show();
-                            });
-                          } else if (cities.length > 1) {
-                            print('multiple cities detected');
-                            Timer(Duration(milliseconds: 1), () {
-                              SelectionDialog (
-                                  title: 'Choose a city',
-                                  elements: cities,
-                                  context: context,
-                                  selectionCallback: (e) {
-                                    Provider.of<VirusGraphModel>(context).setCity(e);
-                                  }).show();
-                            });
-                          } else {
-                            return VirusChart.fromDailyData(
-                              model.currentData, _onSelectionChanged,
-                              selectedProvince: provinces.length > 1 ? provinces[0] : null,
-                              context: context,
+                          if (model.isParsingData || model.selectedCountry == '') {
+                            return Center(
+                              child: CircularProgressIndicator(),
                             );
+                          } else {
+                            if (model.currentData.length == 0) {
+                              return Container (
+                                child: Center (
+                                  child: Text (
+                                    "No data for this country.",
+                                    style: TextStyle(
+                                        color: CustomPalette.text[100],
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w300
+                                    ),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              // checking if a province has been selected
+                              if (model.province != null && model.city != null) {
+                                return VirusChart.fromDailyData(
+                                  model.currentData, _onSelectionChanged,
+                                  selectedProvince: model.province,
+                                  context: context,
+                                );
+                              } else {
+                                List<String> provinces = new List();
+                                List<String> cities = new List();
+
+                                for (var stat in model.currentData) {
+                                  if (!provinces.contains(stat.province))
+                                    provinces.add(stat.province);
+                                  if (!cities.contains(stat.city))
+                                    cities.add(stat.city);
+                                }
+
+                                if (provinces.length > 1) {
+                                  print("multiple provinces detected");
+                                  Timer(Duration(milliseconds: 1), () {
+                                    SelectionDialog (
+                                        title: 'Choose a province',
+                                        elements: provinces,
+                                        context: context,
+                                        selectionCallback: (e) {
+                                          Provider.of<VirusGraphModel>(context).setProvince(e, true);
+                                        }).show();
+                                  });
+                                } else if (cities.length > 1) {
+                                  print('multiple cities detected');
+                                  Timer(Duration(milliseconds: 1), () {
+                                    SelectionDialog (
+                                        title: 'Choose a city',
+                                        elements: cities,
+                                        context: context,
+                                        selectionCallback: (e) {
+                                          Provider.of<VirusGraphModel>(context).setCity(e);
+                                        }).show();
+                                  });
+                                } else {
+                                  return VirusChart.fromDailyData(
+                                    model.currentData, _onSelectionChanged,
+                                    selectedProvince: provinces.length > 1 ? provinces[0] : null,
+                                    context: context,
+                                  );
+                                }
+
+                                return Center (
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            }
                           }
-
-                          return Center (
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                      }
-                    }
-                  }),
-                margin: EdgeInsets.fromLTRB(10, 40, 0, 10),
-              ),
-
-              Container(
-                child: new Text(
-                  FlutterI18n.translate(context, "virus_progression_graph_title"),
-                  style: TextStyle(
-                      color: CustomPalette.text[100],
-                      fontSize: 18,
-                      fontWeight: FontWeight.w300
+                        }),
+                    margin: EdgeInsets.fromLTRB(10, 40, 0, 10),
                   ),
-                ),
-                padding: EdgeInsets.all(10.0),
+
+                  Container(
+                    child: new Text(
+                      FlutterI18n.translate(context, "virus_progression_graph_title"),
+                      style: TextStyle(
+                          color: CustomPalette.text[100],
+                          fontSize: 18,
+                          fontWeight: FontWeight.w300
+                      ),
+                    ),
+                    padding: EdgeInsets.all(10.0),
+                  ),
+                ],
               ),
-            ],
-          ),
-        );
-      },
+            );
+          },
+        ),
+
+        Consumer<DatasetDownloadModel>(
+          builder: (context, model, child) {
+            return Container (
+              margin: EdgeInsets.only(bottom: 10),
+              height: 2,
+              child: Builder(
+                builder: (BuildContext context) {
+                  return
+                    model.isDone ?
+                    Container () :
+                    LinearProgressIndicator(
+                        value: model.downloadedValue,
+                    );
+                },
+              ),
+            );
+          }
+        )
+
+      ],
     );
   }
 }
