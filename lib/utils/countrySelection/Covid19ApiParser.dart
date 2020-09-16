@@ -69,16 +69,20 @@ class Covid19ApiParser {
         'Gibraltar',
         'Greenland',
         'Guadeloupe',
+        'Hong Kong, SAR China',
         'Isle of Man',
+        'Macao',
         'Martinique',
         'Mayotte',
         'Montserrat',
         'New Caledonia',
+        'Northern Mariana Islands',
         'Réunion',
         'Saint-Barthélemy',
         'Saint Pierre and Miquelon',
         'Saint-Martin (French part)',
-        'Turks and Caicos Islands'
+        'Turks and Caicos Islands',
+        'Virgin Islands, US'
       ];
       for (var i=0, len=countries.length; i<len; i++) {
         Country c = countries[i];
