@@ -118,26 +118,24 @@ class Covid19ApiParser {
         return await this._getMissingData(countrySlug, cacheData, context);
       }
 
+      if (countrySlug == 'united-states') {
+        return _downloadUSData();
+      }
+
       String url = "https://api.covid19api.com/dayone/country/$countrySlug";
       String encodedUrl = Uri.encodeFull(url);
       print('hitting $url');
       var request = this._client.get(encodedUrl);
-
-
-      if (countrySlug != 'united-states') {
-        request.timeout(Duration(seconds: 10), onTimeout: () {
-          Fluttertoast.showToast(
-              msg: "API connection failed. Please try again later.",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 2,
-              fontSize: 16.0
-          );
-          return new http.Response("timeout", 504);
-        });
-      } else {
-        return _downloadUSData();
-      }
+      request.timeout(Duration(seconds: 10), onTimeout: () {
+        Fluttertoast.showToast(
+            msg: "API connection failed. Please try again later.",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 2,
+            fontSize: 16.0
+        );
+        return new http.Response("timeout", 504);
+      });
 
       var response = await request;
       var json = jsonDecode(response.body) as List;
