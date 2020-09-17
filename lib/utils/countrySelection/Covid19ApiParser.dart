@@ -160,7 +160,7 @@ class Covid19ApiParser {
       DateFormat formatter = DateFormat("yyyy-MM-dd");
       print('last known data is from ${cached.lastKnownDataTime}');
       String url = "https://api.covid19api.com/country/$countrySlug"
-          "?from=${formatter.format(cached.lastKnownDataTime)}"
+          "?from=${formatter.format(cached.lastKnownDataTime.add(Duration(days: 1)))}"
           "&to=${formatter.format(DateTime.now())}";
       String encodedUrl = Uri.encodeFull(url);
       print('hitting $encodedUrl');
@@ -168,19 +168,11 @@ class Covid19ApiParser {
       var response = await request;
       var json = jsonDecode(response.body) as List;
 
-      // checking if parsed elements are not already present in cache
       List<VirusDayData> newData = json.map((dataJson) =>
           VirusDayData.fromApi(dataJson)).toList();
       List<VirusDayData> completeData = cached.data;
-      List<DateTime> savedDateResults = cached.data.map((e) => e.time).toList();
-      int counter = 0;
-      for (VirusDayData newElement in newData) {
-        if (!savedDateResults.contains(newElement.time)) {
-          completeData.add(newElement);
-          counter++;
-        }
-      }
-      print('parsed and adding $counter new data elements');
+      completeData.addAll(newData);
+      print('parsed and adding ${newData.length} new data elements');
 
       _cache.storeCountryData(countrySlug, completeData);
       Provider.of<VirusGraphModel>(context).setData(completeData);
