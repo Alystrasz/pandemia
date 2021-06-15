@@ -20,7 +20,7 @@ class VirusChart extends StatelessWidget {
   Widget build(BuildContext context) {
     int tick = max < 100 ? (max~/5).toInt() : (max~/10).toInt();
 
-    List<charts.TickSpec<num>> ticks = new List();
+    List<charts.TickSpec<num>> ticks = [];
     for (int i=0; i<11; i++) {
       ticks.add(charts.TickSpec<num>(tick*i));
     }

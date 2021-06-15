@@ -72,7 +72,7 @@ class _CountrySelectionTileState extends State<CountrySelectionTile> {
                             child: CircularProgressIndicator(),
                           );
                         } else {
-                          List<DropdownMenuItem> _items = new List();
+                          List<DropdownMenuItem> _items = [];
                           for (Country c in snapshot.data) {
                             _items.add(DropdownMenuItem (
                                 child: Text(c.name),

@@ -86,8 +86,8 @@ class _CountryVirusProgressCardState extends State<CountryVirusProgressCard> {
                                   context: context,
                                 );
                               } else {
-                                List<String> provinces = new List();
-                                List<String> cities = new List();
+                                List<String> provinces = [];
+                                List<String> cities = [];
 
                                 for (var stat in model.currentData) {
                                   if (!provinces.contains(stat.province))

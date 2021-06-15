@@ -68,14 +68,13 @@ class MyExpositionCard extends StatelessWidget {
                   Container (
                     height: 226,
                     width: 5000,
-                    child: FlatButton(
+                    child: TextButton(
                       child: Text(""),
                       onPressed: () {
                         // Let the animation roll before showing component
                         Timer(Duration(milliseconds: 175), () =>
                             Navigator.pushNamed(context, '/virus-analyze'));
                       },
-                      splashColor: CustomPalette.background[100]
                     ),
                   )
                 ],

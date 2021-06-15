@@ -14,7 +14,7 @@ class ActiveCasesChart extends StatelessWidget {
   Widget build(BuildContext context) {
     int tick = max < 100 ? (max~/5).toInt() : (max~/5).toInt();
 
-    List<charts.TickSpec<num>> ticks = new List();
+    List<charts.TickSpec<num>> ticks = [];
     for (int i=0; i<=5; i++) {
       ticks.add(charts.TickSpec<num>(tick*i));
     }
@@ -60,7 +60,7 @@ class ActiveCasesChart extends StatelessWidget {
       }
     }
 
-    List<ActiveCasesProgressionPoint> points = new List();
+    List<ActiveCasesProgressionPoint> points = [];
     for (DateTime date in series.keys) {
       points.add(
         ActiveCasesProgressionPoint(time: date, value: series[date])

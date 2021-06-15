@@ -18,7 +18,7 @@ class VirusGraphModel extends ChangeNotifier {
 
   static final Covid19ApiParser parser = new Covid19ApiParser();
   bool isParsingData = true;
-  List<VirusDayData> currentData = List();
+  List<VirusDayData> currentData = [];
   bool isSilent = false;
   
 

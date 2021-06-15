@@ -202,7 +202,7 @@ class Covid19ApiParser {
 
       DateFormat formatter = DateFormat("yyyy-MM-dd");
       String url = "";
-      List<VirusDayData> results = List();
+      List<VirusDayData> results = [];
 
       for (int i=0; i<downloadsCount; i++) {
         DateTime
