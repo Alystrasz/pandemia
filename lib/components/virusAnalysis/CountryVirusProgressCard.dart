@@ -104,7 +104,7 @@ class _CountryVirusProgressCardState extends State<CountryVirusProgressCard> {
                                         elements: provinces,
                                         context: context,
                                         selectionCallback: (e) {
-                                          Provider.of<VirusGraphModel>(context).setProvince(e, true);
+                                          Provider.of<VirusGraphModel>(context, listen: false).setProvince(e, true);
                                         }).show();
                                   });
                                 } else if (cities.length > 1) {
@@ -115,7 +115,7 @@ class _CountryVirusProgressCardState extends State<CountryVirusProgressCard> {
                                         elements: cities,
                                         context: context,
                                         selectionCallback: (e) {
-                                          Provider.of<VirusGraphModel>(context).setCity(e);
+                                          Provider.of<VirusGraphModel>(context, listen: false).setCity(e);
                                         }).show();
                                   });
                                 } else {

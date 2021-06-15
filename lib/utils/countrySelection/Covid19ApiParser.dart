@@ -99,14 +99,14 @@ class Covid19ApiParser {
 
     /// Returns pandemia details for a given country.
     Future<List<VirusDayData>> getCountryData (BuildContext context) async {
-      VirusGraphModel model = Provider.of<VirusGraphModel>(context);
-      Provider.of<VirusGraphModel>(context).startParsing();
+      VirusGraphModel model = Provider.of<VirusGraphModel>(context, listen: false);
+      Provider.of<VirusGraphModel>(context, listen: false).startParsing();
       String countrySlug = model.selectedCountry;
 
       // load default values at first start
       if (countrySlug == null) {
-        Provider.of<VirusGraphModel>(context).setSelectedCountry(VirusGraphModel.defaultCountry, context);
-        Provider.of<VirusGraphModel>(context).setProvince(VirusGraphModel.defaultProvince, true);
+        Provider.of<VirusGraphModel>(context, listen: false).setSelectedCountry(VirusGraphModel.defaultCountry, context);
+        Provider.of<VirusGraphModel>(context, listen: false).setProvince(VirusGraphModel.defaultProvince, true);
         return VirusGraphModel.parser.getCountryData(context);
       }
 
@@ -117,7 +117,7 @@ class Covid19ApiParser {
       // checking if cache has valid data
       CacheDataPayload cacheData = await _cache.retrieveCountryData(countrySlug);
       if (cacheData.hasData && cacheData.isUpToDate) {
-        Provider.of<VirusGraphModel>(context).setData(cacheData.data);
+        Provider.of<VirusGraphModel>(context, listen: false).setData(cacheData.data);
         return cacheData.data;
       } else if (cacheData.hasData && !cacheData.isUpToDate) {
         return await this._getMissingData(countrySlug, cacheData, context);
@@ -148,7 +148,7 @@ class Covid19ApiParser {
         VirusDayData.fromApi(dataJson)).toList();
 
       _cache.storeCountryData(countrySlug, data);
-      Provider.of<VirusGraphModel>(context).setData(data);
+      Provider.of<VirusGraphModel>(context, listen: false).setData(data);
       return data;
     }
 
@@ -175,7 +175,7 @@ class Covid19ApiParser {
       print('parsed and adding ${newData.length} new data elements');
 
       _cache.storeCountryData(countrySlug, completeData);
-      Provider.of<VirusGraphModel>(context).setData(completeData);
+      Provider.of<VirusGraphModel>(context, listen: false).setData(completeData);
       return completeData;
     }
 
@@ -236,7 +236,7 @@ class Covid19ApiParser {
       Provider.of<DatasetDownloadModel>(context).setValue(2); //ending
 
       _cache.storeCountryData('united-states', results);
-      Provider.of<VirusGraphModel>(context).setData(results);
+      Provider.of<VirusGraphModel>(context, listen: false).setData(results);
       return results;
     }
 }
