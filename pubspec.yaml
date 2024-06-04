@@ -34,7 +34,7 @@ dependencies:
   sqflite:
   path:
   provider: ^5.0.0
-  http: ^0.12.1
+  http: ^0.13.3
   pull_to_refresh: ^1.6.4
   flutter_dotenv: ^2.1.0
   flutter_i18n: ^0.22.3
